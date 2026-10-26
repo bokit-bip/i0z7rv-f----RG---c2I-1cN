@@ -1,0 +1,5 @@
+# Exclude files over GitHub's 100MB limit (these stream from live server)
+*.unx
+*.zip
+ClusterTruckWEB.data
+gd_web.data

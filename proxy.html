@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Drive</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 87.3 78'%3E%3Cpath fill='%230066da' d='m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z'/%3E%3Cpath fill='%2300ac47' d='M43.65 25 29.9 1.2c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44A9.06 9.06 0 0 0 0 53h27.5z'/%3E%3Cpath fill='%23ea4335' d='m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 10.15z'/%3E%3Cpath fill='%2300832d' d='M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z'/%3E%3Cpath fill='%232684fc' d='M59.8 53H87.3c0-1.55-.4-3.1-1.2-4.5L72.35 24.7c-.8-1.4-1.95-2.5-3.3-3.3L55.3 45.2z'/%3E%3Cpath fill='%23ffba00' d='m73.55 76.8-13.75-23.8H27.5l13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h23.3c1.6 0 3.15-.4 4.5-1.2z'/%3E%3C/svg%3E">
+  <style>:root{--bg:#07090e;--surface:rgba(15, 20, 32, 0.7);--surface-border:rgba(255, 255, 255, 0.08);--card-bg:rgba(17, 23, 38, 0.65);--card-hover:rgba(26, 35, 58, 0.85);--accent:#6366f1;--accent-glow:rgba(99, 102, 241, 0.4);--accent-gradient:linear-gradient(135deg, #6366f1, #8b5cf6);--text:#f8fafc;--text-muted:#94a3b8;--text-dim:#64748b;}*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}body{background:var(--bg);background-image:radial-gradient(circle at 15% 15%, rgba(99,102,241,0.1) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(139,92,246,0.08) 0%, transparent 45%);background-attachment:fixed;color:var(--text);font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;min-height:100vh;overflow-x:hidden;scroll-behavior:smooth;}.top-nav{position:sticky;top:0;z-index:100;height:60px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(7, 9, 14, 0.82);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;transition:background 0.2s ease;}.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}.brand-icon{width:36px;height:36px;border-radius:10px;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 0 16px var(--accent-glow);}.brand-text h1{font-size:16px;font-weight:800;letter-spacing:-0.3px;background:linear-gradient(135deg, #fff 40%, #cbd5e1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:8px;}.brand-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:12px;background:rgba(16, 185, 129, 0.15);border:1px solid rgba(16, 185, 129, 0.35);color:#34d399;-webkit-text-fill-color:#34d399;}.nav-actions{display:flex;align-items:center;gap:10px;}.nav-pill{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--surface-border);border-radius:8px;color:var(--text-muted);font-size:12px;font-weight:600;padding:6px 12px;cursor:pointer;outline:none;transition:all 0.15s ease;}.nav-pill:hover{background:rgba(255, 255, 255, 0.1);color:#fff;border-color:rgba(255, 255, 255, 0.2);}.nav-pill-proxy{background:linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25));border:1px solid rgba(99, 102, 241, 0.5);color:#c7d2fe;font-weight:700;box-shadow:0 0 10px rgba(99, 102, 241, 0.2);}.nav-pill-proxy:hover{background:var(--accent-gradient);color:#fff;border-color:#6366f1;box-shadow:0 0 18px var(--accent-glow);transform:translateY(-1px);}.nav-pill-direct{background:linear-gradient(135deg, rgba(234, 179, 8, 0.22), rgba(245, 158, 11, 0.22));border:1px solid rgba(245, 158, 11, 0.5);color:#fde047;font-weight:700;text-decoration:none;box-shadow:0 0 10px rgba(234, 179, 8, 0.15);transition:all 0.15s ease;}.nav-pill-direct:hover{background:linear-gradient(135deg, #eab308, #f59e0b);color:#0b0e14;border-color:#eab308;box-shadow:0 0 16px rgba(234, 179, 8, 0.45);transform:translateY(-1px);}.nav-pill-panic{background:rgba(239, 68, 68, 0.15);border-color:rgba(239, 68, 68, 0.35);color:#fca5a5;}.nav-pill-panic:hover{background:#ef4444;color:#fff;border-color:#ef4444;box-shadow:0 0 14px rgba(239, 68, 68, 0.5);}.nav-select{background:#111520;}.hero{max-width:1400px;margin:28px auto 20px;padding:0 24px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}.hero-title{font-size:32px;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(135deg, #ffffff 30%, #94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.hero-desc{color:var(--text-muted);font-size:14px;max-width:620px;line-height:1.5;}.search-wrapper{position:relative;width:100%;max-width:540px;margin-top:6px;}.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none;}.search-input{width:100%;background:rgba(15, 20, 32, 0.85);backdrop-filter:blur(12px);border:1px solid var(--surface-border);border-radius:12px;padding:13px 44px 13px 44px;color:#fff;font-size:14.5px;outline:none;transition:all 0.2s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 20px rgba(0, 0, 0, 0.25);}.search-input:focus{border-color:var(--accent);background:rgba(20, 27, 45, 0.95);box-shadow:0 0 20px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.4);}.search-kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:var(--text-dim);background:rgba(255, 255, 255, 0.06);padding:3px 6px;border-radius:5px;border:1px solid rgba(255, 255, 255, 0.08);pointer-events:none;}.categories-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:900px;margin-top:4px;}.chip{background:rgba(18, 24, 38, 0.65);border:1px solid var(--surface-border);border-radius:20px;padding:7px 15px;font-size:12.5px;font-weight:600;color:var(--text-muted);cursor:pointer;outline:none;transition:all 0.18s cubic-bezier(0.16, 1, 0.3, 1);user-select:none;}.chip:hover{background:rgba(28, 38, 60, 0.85);color:#fff;border-color:rgba(255, 255, 255, 0.18);transform:translateY(-1px);}.chip.active{background:var(--accent-gradient);color:#fff;border-color:transparent;box-shadow:0 2px 14px var(--accent-glow);}.chip-proxy{border-color:rgba(99, 102, 241, 0.4);color:#c7d2fe;}.counter-pill{font-size:12px;color:var(--text-dim);font-weight:600;letter-spacing:0.2px;}.grid-container{max-width:1440px;margin:12px auto 60px;padding:0 24px;}.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(215px, 1fr));gap:18px;}.card{background:var(--card-bg);border:1px solid var(--surface-border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);cursor:pointer;position:relative;}.card:hover{background:var(--card-hover);border-color:rgba(99, 102, 241, 0.45);transform:translateY(-4px) scale(1.015);box-shadow:0 12px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);}.card-thumb-wrap{width:100%;aspect-ratio:16 / 10;position:relative;background:#0d111c;overflow:hidden;}.card-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);}.card:hover .card-thumb{transform:scale(1.06);}.quick-play-btn{position:absolute;inset:0;background:rgba(7, 9, 14, 0.5);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s ease;color:#fff;font-size:28px;}.card:hover .quick-play-btn{opacity:1;}.card-badge{position:absolute;top:9px;left:9px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:3px 8px;border-radius:6px;backdrop-filter:blur(8px);z-index:2;}.cat-rose{background:rgba(244, 63, 94, 0.2);border:1px solid rgba(244, 63, 94, 0.4);color:#fb7185;}.cat-emerald{background:rgba(16, 185, 129, 0.2);border:1px solid rgba(16, 185, 129, 0.4);color:#34d399;}.cat-purple{background:rgba(168, 85, 247, 0.2);border:1px solid rgba(168, 85, 247, 0.4);color:#c084fc;}.cat-cyan{background:rgba(6, 182, 212, 0.2);border:1px solid rgba(6, 182, 212, 0.4);color:#22d3ee;}.cat-amber{background:rgba(245, 158, 11, 0.2);border:1px solid rgba(245, 158, 11, 0.4);color:#fbbf24;}.cat-yellow{background:rgba(234, 179, 8, 0.2);border:1px solid rgba(234, 179, 8, 0.4);color:#fde047;}.cat-sky{background:rgba(14, 165, 233, 0.2);border:1px solid rgba(14, 165, 233, 0.4);color:#38bdf8;}.cat-orange{background:rgba(249, 115, 22, 0.2);border:1px solid rgba(249, 115, 22, 0.4);color:#fb923c;}.cat-green{background:rgba(34, 197, 94, 0.2);border:1px solid rgba(34, 197, 94, 0.4);color:#4ade80;}.cat-indigo{background:rgba(99, 102, 241, 0.2);border:1px solid rgba(99, 102, 241, 0.4);color:#818cf8;}.card-content{padding:13px 14px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:10px;}.card-title{font-size:14.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-0.2px;}.card-sub{font-size:11.5px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;}.card-btn{padding:7px 0;border-radius:7px;font-size:11.5px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.15s ease;}.card-btn-primary{background:var(--accent-gradient);color:#fff;box-shadow:0 2px 8px rgba(99, 102, 241, 0.3);}.card-btn-primary:hover{box-shadow:0 4px 14px var(--accent-glow);filter:brightness(1.1);}.card-btn-secondary{background:rgba(255, 255, 255, 0.05);border:1px solid var(--surface-border);color:var(--text-muted);}.card-btn-secondary:hover{background:rgba(255, 255, 255, 0.1);color:#fff;}@keyframes modalFadeIn{from{transform:scale(0.995);}to{transform:scale(1);}}#modal-game-player{position:fixed;inset:0;z-index:99999;background:#05070a;display:flex;flex-direction:column;overflow:hidden;width:100%;height:100%;animation:modalFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);}#modal-game-player.hidden{display:none !important;}.player-top-bar{height:52px;background:rgba(15, 20, 32, 0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:12px;flex-shrink:0;user-select:none;}.player-bar-left{display:flex;align-items:center;gap:12px;min-width:0;}.player-btn-back{background:linear-gradient(135deg, rgba(99,102,241,0.22), rgba(79,70,229,0.3));border:1px solid rgba(99,102,241,0.45);color:#a5b4fc;padding:6px 13px;border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.15s ease;}.player-btn-back:hover{background:var(--accent);color:#fff;box-shadow:0 2px 10px var(--accent-glow);}.player-game-title{font-size:14.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.player-live-dot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;display:inline-block;}.player-bar-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}.player-btn, .player-select{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;outline:none;transition:all 0.15s ease;}.player-btn:hover{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.22);}.player-btn-panic{background:rgba(239, 68, 68, 0.18);border-color:rgba(239, 68, 68, 0.4);color:#fca5a5;}.player-btn-panic:hover{background:#ef4444;color:#fff;}.player-viewport{position:relative;flex:1;width:100%;height:calc(100% - 52px);background:#000;overflow:hidden;}#player-iframe{width:100%;height:100%;border:0;display:block;background:#000;}.player-loading-spinner{position:absolute;inset:0;background:rgba(5, 7, 10, 0.94);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:10;color:#e2e8f0;font-size:14px;font-weight:600;transition:opacity 0.25s ease;}.player-loading-spinner.hidden{opacity:0;pointer-events:none;}.spinner-ring{width:44px;height:44px;border-radius:50%;border:3px solid rgba(99, 102, 241, 0.2);border-top-color:#6366f1;animation:spin 0.75s linear infinite;}@keyframes spin{to{transform:rotate(360deg);}}#modal-proxy-browser{position:fixed;inset:0;z-index:99999;background:#06080e;display:flex;flex-direction:column;overflow:hidden;width:100%;height:100%;animation:modalFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);}#modal-proxy-browser.hidden{display:none !important;}.proxy-top-bar{height:52px;background:rgba(14, 18, 28, 0.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px;flex-shrink:0;user-select:none;}.proxy-bar-left{display:flex;align-items:center;gap:10px;flex:1;max-width:820px;min-width:0;}.proxy-nav-btns{display:flex;align-items:center;gap:5px;}.proxy-icon-btn{width:30px;height:30px;border-radius:7px;background:rgba(255, 255, 255, 0.05);border:1px solid rgba(255, 255, 255, 0.1);color:#cbd5e1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s ease;}.proxy-icon-btn:hover{background:rgba(255, 255, 255, 0.14);color:#fff;border-color:rgba(255, 255, 255, 0.25);}.proxy-omnibar-wrap{position:relative;flex:1;display:flex;align-items:center;min-width:0;}.proxy-lock-icon{position:absolute;left:11px;color:#10b981;pointer-events:none;}.proxy-omnibar{width:100%;background:rgba(7, 10, 18, 0.85);border:1px solid rgba(255, 255, 255, 0.12);border-radius:20px;padding:7px 75px 7px 32px;color:#f1f5f9;font-size:13px;outline:none;transition:all 0.18s ease;font-family:inherit;}.proxy-omnibar:focus{background:rgba(10, 14, 25, 0.98);border-color:var(--accent);box-shadow:0 0 16px var(--accent-glow);}.proxy-go-btn{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:var(--accent-gradient);border:none;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:14px;cursor:pointer;transition:all 0.15s ease;}.proxy-go-btn:hover{filter:brightness(1.15);box-shadow:0 0 10px var(--accent-glow);}.proxy-bar-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}.proxy-viewport{position:relative;flex:1;width:100%;height:calc(100% - 52px);background:#07090e;overflow:hidden;}#proxy-iframe{width:100%;height:100%;border:0;display:none;background:#fff;}.proxy-start-page{position:absolute;inset:0;background:#07090e;background-image:radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(139,92,246,0.1) 0%, transparent 50%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow-y:auto;z-index:5;}.proxy-start-page.hidden{display:none !important;}.proxy-start-content{max-width:760px;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;}.proxy-logo-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:rgba(99, 102, 241, 0.15);border:1px solid rgba(99, 102, 241, 0.35);color:#a5b4fc;font-size:12px;font-weight:700;letter-spacing:0.5px;}.proxy-start-title{font-size:34px;font-weight:800;letter-spacing:-0.6px;background:linear-gradient(135deg, #ffffff 40%, #94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.proxy-start-sub{color:var(--text-muted);font-size:14px;max-width:540px;line-height:1.5;}.proxy-main-search-wrap{position:relative;width:100%;max-width:620px;margin:6px 0 14px;}.proxy-main-search-input{width:100%;background:rgba(15, 20, 32, 0.95);border:1px solid var(--surface-border);border-radius:14px;padding:15px 105px 15px 46px;color:#fff;font-size:15px;outline:none;box-shadow:0 4px 24px rgba(0, 0, 0, 0.4);transition:all 0.2s ease;}.proxy-main-search-input:focus{border-color:var(--accent);box-shadow:0 0 24px var(--accent-glow), 0 4px 24px rgba(0,0,0,0.5);}.proxy-main-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none;}.proxy-main-search-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--accent-gradient);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;padding:9px 18px;cursor:pointer;transition:all 0.15s ease;}.proxy-main-search-btn:hover{box-shadow:0 0 14px var(--accent-glow);filter:brightness(1.1);}.proxy-presets-label{font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.8px;text-transform:uppercase;margin-top:8px;}.proxy-presets-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px;width:100%;max-width:720px;}.proxy-preset-card{background:rgba(17, 23, 38, 0.7);border:1px solid var(--surface-border);border-radius:12px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all 0.18s ease;color:#e2e8f0;text-decoration:none;}.proxy-preset-card:hover{background:rgba(26, 35, 58, 0.9);border-color:rgba(99, 102, 241, 0.45);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3);}.preset-icon{font-size:24px;}.preset-name{font-size:12.5px;font-weight:700;color:#fff;}.preset-desc{font-size:10px;color:var(--text-dim);}.proxy-loading-bar{position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg, #6366f1, #a855f7, #6366f1);background-size:200% 100%;animation:proxyProgress 1.2s infinite linear;z-index:100;display:none;}@keyframes proxyProgress{0%{background-position:100% 0;}100%{background-position:-100% 0;}}</style>
+  <script>
+    const ICONS = {"drive": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 87.3 78'%3E%3Cpath fill='%230066da' d='m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z'/%3E%3Cpath fill='%2300ac47' d='M43.65 25 29.9 1.2c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44A9.06 9.06 0 0 0 0 53h27.5z'/%3E%3Cpath fill='%23ea4335' d='m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 10.15z'/%3E%3Cpath fill='%2300832d' d='M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z'/%3E%3Cpath fill='%232684fc' d='M59.8 53H87.3c0-1.55-.4-3.1-1.2-4.5L72.35 24.7c-.8-1.4-1.95-2.5-3.3-3.3L55.3 45.2z'/%3E%3Cpath fill='%23ffba00' d='m73.55 76.8-13.75-23.8H27.5l13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h23.3c1.6 0 3.15-.4 4.5-1.2z'/%3E%3C/svg%3E", "classroom": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e8e3e' d='M22 6.5C22 5.12 20.88 4 19.5 4h-15C3.12 4 2 5.12 2 6.5v11C2 18.88 3.12 20 4.5 20h15c1.38 0 2.5-1.12 2.5-2.5v-11z'/%3E%3Cpath fill='%23f9ab00' d='M20.5 5.5h-17c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1h17c.55 0 1-.45 1-1v-11c0-.55-.45-1-1-1z'/%3E%3Ccircle cx='12' cy='10' r='2.2' fill='%23fff'/%3E%3Cpath fill='%23fff' d='M12 13.2c-2.4 0-4.5 1.2-4.5 2.5V17h9v-1.3c0-1.3-2.1-2.5-4.5-2.5z'/%3E%3Ccircle cx='7' cy='11' r='1.6' fill='%23fff' opacity='.8'/%3E%3Cpath fill='%23fff' opacity='.8' d='M7 13.5c-1.8 0-3.2.9-3.2 2V16h2.2v-.8c0-.6.4-1.2 1-1.7z'/%3E%3Ccircle cx='17' cy='11' r='1.6' fill='%23fff' opacity='.8'/%3E%3Cpath fill='%23fff' opacity='.8' d='M17 13.5c1.8 0 3.2.9 3.2 2V16H18v-.8c0-.6-.4-1.2-1-1.7z'/%3E%3C/svg%3E", "docs": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234285F4' d='M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z'/%3E%3Cpath fill='%23A1C2FA' d='M14 2v6h6'/%3E%3Cpath fill='%23FFF' d='M8 12h8v1.5H8zm0 3h8v1.5H8zm0 3h5v1.5H8z'/%3E%3C/svg%3E", "canvas": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E02424' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z'/%3E%3C/svg%3E", "desmos": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232F7B18' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/%3E%3C/svg%3E", "default": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3E%3Cpath d='M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'/%3E%3C/svg%3E"};
+    const TITLES = {
+      drive: 'Google Drive',
+      classroom: 'Classes - Google Classroom',
+      docs: 'Google Docs',
+      canvas: 'Canvas LMS - Dashboard',
+      desmos: 'Desmos | Graphing Calculator',
+      default: 'Bokit Encrypted Proxy'
+    };
+
+    function setGlobalCloak(key) {
+      const link = document.querySelector("link[rel*='icon']");
+      if (link && ICONS[key]) link.href = ICONS[key];
+      if (TITLES[key]) document.title = TITLES[key];
+      const xSel = document.getElementById('proxy-cloak-select');
+      if (xSel && xSel.value !== key) xSel.value = key;
+      try { localStorage.setItem('bokit_tab_cloak', key); } catch(e) {}
+    }
+
+    function panicNow() { window.location.replace('https://classroom.google.com'); }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '`' || e.key === '~') { e.preventDefault(); panicNow(); }
+    });
+
+    (function() {
+      try {
+        const saved = localStorage.getItem('bokit_tab_cloak') || 'drive';
+        if (TITLES[saved]) document.title = TITLES[saved];
+      } catch(e) {}
+    })();
+  </script>
+</head>
+<body style="overflow:hidden;">
+  <div id="modal-proxy-browser" style="position:fixed;inset:0;width:100%;height:100%;z-index:10;">
+    <div class="proxy-top-bar">
+      <div class="proxy-bar-left">
+        <a href="index.html" class="player-btn-back" style="text-decoration:none;">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Arcade</span>
+        </a>
+        <div class="proxy-nav-btns">
+          <button class="proxy-icon-btn" onclick="proxyGoHome()" title="Home"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></button>
+          <button class="proxy-icon-btn" onclick="reloadProxy()" title="Reload (R)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
+        </div>
+        <div class="proxy-omnibar-wrap">
+          <svg class="proxy-lock-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input type="text" id="proxy-url-input" class="proxy-omnibar" placeholder="Enter URL or search DuckDuckGo..." autocomplete="off">
+          <button class="proxy-go-btn" onclick="handleProxySubmit()" title="Go (Enter)">Go ➔</button>
+        </div>
+      </div>
+      <div class="proxy-bar-right">
+        <select id="proxy-engine-select" class="player-select" onchange="switchProxyEngine(this.value)">
+          <option value="scramjet">⚡ Scramjet Gateway</option>
+          <option value="ddstatic">✨ DayDream X Static</option>
+        </select>
+        <select id="proxy-cloak-select" class="player-select" onchange="setGlobalCloak(this.value)">
+          <option value="drive">🎭 Google Drive</option>
+          <option value="classroom">🎭 Google Classroom</option>
+          <option value="docs">🎭 Google Docs</option>
+          <option value="canvas">🎭 Canvas</option>
+          <option value="desmos">🎭 Desmos</option>
+          <option value="default">🎭 Cloak: Off</option>
+        </select>
+        <button class="player-btn" onclick="popoutProxyStealth()" title="about:blank (B)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Popout</button>
+        <button class="player-btn" onclick="toggleProxyFullscreen()" title="Fullscreen (F)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg> Fullscreen</button>
+        <button class="player-btn player-btn-panic" onclick="panicNow()" title="Panic (~)">🚨 Panic (~)</button>
+      </div>
+    </div>
+    <div class="proxy-viewport">
+      <div id="proxy-loading-bar" class="proxy-loading-bar"></div>
+      
+      <!-- DayDream X Start Screen -->
+      <div id="proxy-start-page" class="proxy-start-page">
+        <div class="proxy-start-content">
+          <div class="proxy-logo-badge">🌐 BOKIT ENCRYPTED PROXY</div>
+          <h1 class="proxy-start-title">Encrypted Web Browser</h1>
+          <p class="proxy-start-sub">Unblock web services, bypass DPI firewalls, and browse with zero tracking.</p>
+
+          <div class="proxy-main-search-wrap">
+            <svg class="proxy-main-search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2">
+              <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="proxy-main-input" class="proxy-main-search-input" placeholder="Search DuckDuckGo or enter URL (e.g. youtube.com)..." autocomplete="off">
+            <button class="proxy-main-search-btn" onclick="submitProxyMain()">Browse</button>
+          </div>
+
+          <div class="proxy-presets-label">⚡ POPULAR WEBSITES</div>
+          <div class="proxy-presets-grid">
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://www.google.com')">
+              <span class="preset-icon">🔍</span>
+              <span class="preset-name">Google</span>
+              <span class="preset-desc">Search engine</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://www.youtube.com')">
+              <span class="preset-icon">📺</span>
+              <span class="preset-name">YouTube</span>
+              <span class="preset-desc">Video stream</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://discord.com/app')">
+              <span class="preset-icon">💬</span>
+              <span class="preset-name">Discord</span>
+              <span class="preset-desc">Chat &amp; Voice</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://www.reddit.com')">
+              <span class="preset-icon">👽</span>
+              <span class="preset-name">Reddit</span>
+              <span class="preset-desc">Communities</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://www.tiktok.com')">
+              <span class="preset-icon">📱</span>
+              <span class="preset-name">TikTok</span>
+              <span class="preset-desc">Shorts &amp; clips</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://poki.com')">
+              <span class="preset-icon">🎮</span>
+              <span class="preset-name">Poki</span>
+              <span class="preset-desc">Web games</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://www.crazygames.com')">
+              <span class="preset-icon">🕹️</span>
+              <span class="preset-name">CrazyGames</span>
+              <span class="preset-desc">Online games</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://www.chess.com')">
+              <span class="preset-icon">♟️</span>
+              <span class="preset-name">Chess.com</span>
+              <span class="preset-desc">Board games</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://en.wikipedia.org')">
+              <span class="preset-icon">📚</span>
+              <span class="preset-name">Wikipedia</span>
+              <span class="preset-desc">Encyclopedia</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://github.com')">
+              <span class="preset-icon">🐙</span>
+              <span class="preset-name">GitHub</span>
+              <span class="preset-desc">Code repository</span>
+            </div>
+            <div class="proxy-preset-card" onclick="navigateToProxy('https://allflix.org')">
+              <span class="preset-icon">🎬</span>
+              <span class="preset-name">AllFlix Movies</span>
+              <span class="preset-desc">HD streaming</span>
+            </div>
+            <div class="proxy-preset-card" onclick="launchDaydreamStatic()">
+              <span class="preset-icon">✨</span>
+              <span class="preset-name">DayDream X</span>
+              <span class="preset-desc">Wisp ServiceWorker</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <iframe id="proxy-iframe" src="about:blank" allow="fullscreen; gamepad; autoplay; clipboard-read; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
+    </div>
+  </div>
+
+  <script>
+    let currentProxyUrl = '';
+    let currentProxyEngine = 'scramjet';
+
+    function proxyGoHome() {
+      const startPage = document.getElementById('proxy-start-page');
+      const iframe = document.getElementById('proxy-iframe');
+      const omnibar = document.getElementById('proxy-url-input');
+      const loading = document.getElementById('proxy-loading-bar');
+      if (startPage) startPage.classList.remove('hidden');
+      if (iframe) { iframe.style.display = 'none'; iframe.src = 'about:blank'; }
+      if (omnibar) omnibar.value = '';
+      if (loading) loading.style.display = 'none';
+      currentProxyUrl = '';
+    }
+
+    function getProxyGateway(targetUrl) {
+      if (currentProxyEngine === 'ddstatic' || targetUrl === 'daydream') {
+        const base = document.baseURI || window.location.href;
+        return new URL('dd/index.svg', base).href;
+      }
+      const host = (window.location.hostname === 'pop-leave.tailcb4af7.ts.net' || window.location.hostname === 'localhost')
+        ? ''
+        : 'https://pop-leave.tailcb4af7.ts.net';
+      return host + '/browser/gateway?url=' + encodeURIComponent(targetUrl);
+    }
+
+    function navigateToProxy(input) {
+      try {
+        window.open('https://uplcm.com/4/11930399', '_blank', 'noopener,noreferrer');
+      } catch(e) {}
+      if (!input) return;
+      input = input.trim();
+      let finalUrl = input;
+
+      if (input === 'dd:' || input === 'daydream' || input === 'dd') {
+        launchDaydreamStatic();
+        return;
+      }
+
+      if (!input.includes('.') || input.includes(' ') || input.startsWith('?')) {
+        const query = input.replace(/^\?/, '').trim();
+        finalUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
+      } else if (!/^https?:\/\//i.test(input)) {
+        finalUrl = 'https://' + input;
+      }
+
+      currentProxyUrl = finalUrl;
+      const omnibar = document.getElementById('proxy-url-input');
+      const startPage = document.getElementById('proxy-start-page');
+      const iframe = document.getElementById('proxy-iframe');
+      const loading = document.getElementById('proxy-loading-bar');
+
+      if (omnibar) omnibar.value = finalUrl;
+      if (startPage) startPage.classList.add('hidden');
+      if (iframe) {
+        iframe.style.display = 'block';
+        if (loading) loading.style.display = 'block';
+        iframe.src = getProxyGateway(finalUrl);
+      }
+    }
+
+    function handleProxySubmit() {
+      const omnibar = document.getElementById('proxy-url-input');
+      if (omnibar && omnibar.value) navigateToProxy(omnibar.value);
+    }
+
+    function submitProxyMain() {
+      const mainInput = document.getElementById('proxy-main-input');
+      if (mainInput && mainInput.value) navigateToProxy(mainInput.value);
+    }
+
+    function launchDaydreamStatic() {
+      currentProxyEngine = 'ddstatic';
+      const engSel = document.getElementById('proxy-engine-select');
+      if (engSel) engSel.value = 'ddstatic';
+      const base = document.baseURI || window.location.href;
+      const ddUrl = new URL('dd/index.svg', base).href;
+      currentProxyUrl = ddUrl;
+      const omnibar = document.getElementById('proxy-url-input');
+      const startPage = document.getElementById('proxy-start-page');
+      const iframe = document.getElementById('proxy-iframe');
+      const loading = document.getElementById('proxy-loading-bar');
+
+      if (omnibar) omnibar.value = 'daydream://static';
+      if (startPage) startPage.classList.add('hidden');
+      if (iframe) {
+        iframe.style.display = 'block';
+        if (loading) loading.style.display = 'block';
+        iframe.src = ddUrl;
+      }
+    }
+
+    function switchProxyEngine(val) {
+      currentProxyEngine = val;
+      if (val === 'ddstatic') {
+        launchDaydreamStatic();
+      } else if (currentProxyUrl && !currentProxyUrl.includes('dd/index.svg')) {
+        navigateToProxy(currentProxyUrl);
+      } else {
+        proxyGoHome();
+      }
+    }
+
+    function reloadProxy() {
+      const iframe = document.getElementById('proxy-iframe');
+      const loading = document.getElementById('proxy-loading-bar');
+      if (iframe && iframe.style.display !== 'none') {
+        if (loading) loading.style.display = 'block';
+        try { iframe.contentWindow.location.reload(); }
+        catch(e) { iframe.src = iframe.src; }
+      }
+    }
+
+    function toggleProxyFullscreen() {
+      const modal = document.getElementById('modal-proxy-browser');
+      if (!document.fullscreenElement) (modal || document.documentElement).requestFullscreen().catch(() => {});
+      else if (document.exitFullscreen) document.exitFullscreen();
+    }
+
+    function popoutProxyStealth() {
+      const win = window.open('about:blank', '_blank');
+      if (!win) { alert('Popup blocked.'); return; }
+      const curKey = localStorage.getItem('bokit_tab_cloak') || 'drive';
+      const curTitle = TITLES[curKey] || TITLES.drive;
+      const curIcon = ICONS[curKey] || ICONS.drive;
+      const target = currentProxyUrl ? getProxyGateway(currentProxyUrl) : (new URL('proxy.html', document.baseURI || window.location.href).href);
+
+      const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + curTitle + '</title><link rel="icon" type="image/svg+xml" href="' + curIcon + '"><style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#06080e;}iframe{width:100%;height:100%;border:none;display:block;}</style></head><body><iframe src="' + target + '" allow="fullscreen; gamepad; autoplay; clipboard-read; clipboard-write; encrypted-media"></iframe></body></html>';
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
+    }
+
+    const proxyFrame = document.getElementById('proxy-iframe');
+    if (proxyFrame) {
+      proxyFrame.onload = function() {
+        const loading = document.getElementById('proxy-loading-bar');
+        if (loading) loading.style.display = 'none';
+        try {
+          proxyFrame.focus();
+          if (proxyFrame.contentWindow) proxyFrame.contentWindow.focus();
+        } catch(e) {}
+      };
+    }
+
+    window.addEventListener('message', function(e) {
+      if (e.data && e.data.type === 'scramjet_navigated' && e.data.url) {
+        currentProxyUrl = e.data.url;
+        const omnibar = document.getElementById('proxy-url-input');
+        if (omnibar) omnibar.value = e.data.url;
+      }
+    });
+
+    const omnibarInput = document.getElementById('proxy-url-input');
+    if (omnibarInput) {
+      omnibarInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleProxySubmit();
+      });
+    }
+    const mainProxyInput = document.getElementById('proxy-main-input');
+    if (mainProxyInput) {
+      mainProxyInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') submitProxyMain();
+      });
+    }
+
+    window.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'l') {
+        e.preventDefault();
+        if (omnibarInput) { omnibarInput.focus(); omnibarInput.select(); }
+      } else if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        if (omnibarInput) { omnibarInput.focus(); omnibarInput.select(); }
+      } else if ((e.key === 'r' || e.key === 'R') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault(); reloadProxy();
+      } else if ((e.key === 'b' || e.key === 'B') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault(); popoutProxyStealth();
+      } else if ((e.key === 'f' || e.key === 'F') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+        e.preventDefault(); toggleProxyFullscreen();
+      }
+    });
+
+    (function() {
+      try {
+        const p = new URLSearchParams(window.location.search);
+        if (p.get('url')) navigateToProxy(p.get('url'));
+        else if (window.location.hash && window.location.hash.startsWith('#url=')) {
+          navigateToProxy(decodeURIComponent(window.location.hash.slice(5)));
+        }
+      } catch(e) {}
+    })();
+  </script>
+</body>
+</html>
