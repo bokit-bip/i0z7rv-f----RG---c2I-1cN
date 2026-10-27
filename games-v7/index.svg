@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xhtml="http://www.w3.org/1999/xhtml"
+     viewBox="0 0 1200 675"
+     width="100%" height="100%">
+  <title>Games V7 — Skeletal Flowers Retro Arcade</title>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050609"/>
+      <stop offset="50%" stop-color="#0d111c"/>
+      <stop offset="100%" stop-color="#140a14"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#bg)"/>
+  <foreignObject x="0" y="0" width="100%" height="100%">
+    <xhtml:iframe id="frame" style="width:100%;height:100%;border:0;position:fixed;top:0;left:0;background:#050609;" allow="autoplay; fullscreen; gamepad; clipboard-read; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></xhtml:iframe>
+  </foreignObject>
+  <script><![CDATA[
+    (function(){
+      var frame = document.getElementById("frame");
+      var targetUrl = new URL("index.html", document.baseURI).href;
+      fetch(targetUrl)
+        .then(function(r){
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.text();
+        })
+        .then(function(html){
+          var baseTag = '<base href="' + new URL("./", targetUrl).href + '">';
+          var full = html.includes("<head>") ? html.replace("<head>", "<head>" + baseTag) : (baseTag + html);
+          var blob = new Blob([full], { type: "text/html" });
+          frame.src = URL.createObjectURL(blob);
+        })
+        .catch(function(err){
+          frame.src = targetUrl;
+        });
+    })();
+  ]]></script>
+</svg>
