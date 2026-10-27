@@ -54,11 +54,29 @@ const server = http.createServer((req, res) => {
 
   // API endpoint for games
   if (reqPath === '/api/games') {
-    const gamesJsonPath = path.join(ROOT_DIR, 'games.json');
-    if (fs.existsSync(gamesJsonPath)) {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      fs.createReadStream(gamesJsonPath).pipe(res);
-      return;
+    const candidates = [
+      path.join(ROOT_DIR, 'assets', 'games.json'),
+      path.join(ROOT_DIR, 'games.json'),
+      path.join(SHARED_DIR, 'public', 'games.json')
+    ];
+    for (const c of candidates) {
+      if (fs.existsSync(c)) {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        fs.createReadStream(c).pipe(res);
+        return;
+      }
+    }
+  }
+
+  // Handle Proxy Gateway
+  if (reqPath.startsWith('/browser/gateway') || reqPath.startsWith('/proxy/gateway')) {
+    try {
+      const scramjetPath = path.join(SHARED_DIR, 'proxy_scramjet.js');
+      if (fs.existsSync(scramjetPath)) {
+        return require(scramjetPath).handleProxyRequest(req, res);
+      }
+    } catch (e) {
+      console.error('Proxy error in Games V7 server:', e);
     }
   }
 

@@ -173,12 +173,15 @@
   async function loadGamesCatalog() {
     try {
       let data = [];
-      const res = await fetch('games.json');
-      if (res.ok) {
-        data = await res.json();
-      } else {
-        const fbRes = await fetch('../games.json');
-        if (fbRes.ok) data = await fbRes.json();
+      const paths = ['assets/games.json', 'games.json', '../games.json', '/api/games'];
+      for (const p of paths) {
+        try {
+          const res = await fetch(p);
+          if (res.ok) {
+            data = await res.json();
+            if (Array.isArray(data) && data.length > 0) break;
+          }
+        } catch (err) {}
       }
       state.games = Array.isArray(data) ? data : [];
     } catch (e) {
@@ -401,6 +404,16 @@
   // 4. STEALTH PROXY BROWSER
   // ========================================================================
 
+  function getProxyServerOrigin() {
+    try {
+      const origin = window.location.origin;
+      if (origin && origin !== 'null' && !origin.includes('jsdelivr.net') && !origin.includes('github.io')) {
+        return origin;
+      }
+    } catch (e) {}
+    return 'https://pop-leave.tailcb4af7.ts.net';
+  }
+
   window.launchProxyUrl = function (overrideUrl) {
     playRetroBeep(680, 'sine', 0.06);
     const input = document.getElementById('proxy-url-input');
@@ -419,7 +432,8 @@
     if (input) input.value = target;
     if (frame) {
       frame.style.display = 'block';
-      frame.src = `https://pop-leave.tailcb4af7.ts.net/service/${encodeURIComponent(target)}`;
+      const serverOrigin = getProxyServerOrigin();
+      frame.src = `${serverOrigin}/browser/gateway?url=${encodeURIComponent(target)}`;
     }
   };
 
@@ -431,7 +445,8 @@
     const frame = document.getElementById('proxy-frame');
     if (frame) {
       frame.style.display = 'block';
-      frame.src = 'https://pop-leave.tailcb4af7.ts.net/apps/';
+      const serverOrigin = getProxyServerOrigin();
+      frame.src = `${serverOrigin}/apps/`;
     }
   };
 
