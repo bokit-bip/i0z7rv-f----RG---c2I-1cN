@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="site-title">Games V7 — Skeletal Flowers Retro Arcade</title>
   <link id="site-favicon" rel="icon" type="image/svg+xml" href="assets/skull-logo.svg" />
+  <!-- Google Fonts for Retro Glitch & Arcade Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -44,39 +48,51 @@
   <main>
     <!-- ====================================================================
          1. HOME TAB — SKELETAL FLOWERS RETRO SHOWCASE
+         Exact Composition Matching Reference Screenshot
          ==================================================================== -->
     <section id="home-view" class="tab-view active">
-      <!-- Ambient Hero Visual Artwork -->
-      <div class="hero-backdrop-container">
-        <img src="assets/hero-bg.png" class="hero-art-img" alt="Skeletal Flowers Visual" />
-      </div>
-
-      <div class="hero-content">
-        <div class="hero-headline-wrap">
-          <span class="hero-subtitle-tag">// DIGITAL VAULT 2026</span>
-          <h1 class="hero-main-title">SKELETAL FLOWERS</h1>
-        </div>
-
-        <!-- Classic Retro OS Window (Matches User Screenshot) -->
-        <div class="retro-os-window">
-          <div class="window-titlebar">
-            <div class="window-controls-group">
-              <button class="win-btn" title="Minimize">_</button>
-              <button class="win-btn" title="Maximize">□</button>
-              <button class="win-btn" title="Close">✕</button>
+      <div class="hero-showcase-container">
+        
+        <!-- Retro Main Stage: Solid Dark Background with 3D Flower & Overlay Window -->
+        <div class="hero-stage-layout">
+          
+          <!-- Left Column: Eyebrow, 3D Glitch Title, Classic Retro OS Window, Collections -->
+          <div class="hero-info-column">
+            <span class="hero-eyebrow">// DIGITAL VAULT 2026</span>
+            
+            <!-- Exact CRT Chromatic Aberration Text (Red + Cyan + White) -->
+            <div class="crt-title-container">
+              <div class="crt-sf red">SKELETAL FLOWERS</div>
+              <div class="crt-sf blue">SKELETAL FLOWERS</div>
+              <h1 class="crt-sf main">SKELETAL FLOWERS</h1>
             </div>
-          </div>
-          <div class="window-body">
-            <p class="window-body-text">
-              <strong>220+ digitally preserved retro & modern games</strong> with unblocked stealth proxy and live in-browser development environment. Pure performance, zero latency, inspired by the essence of arcade gaming.
-            </p>
+
+            <!-- Classic Retro OS Window (Matches User Screenshot) -->
+            <div class="retro-browser-window">
+              <div class="retro-browser-bar">
+                <img src="assets/close-button.svg" alt="Window controls" class="retro-controls-img" />
+              </div>
+              <div class="retro-window-body">
+                <p>
+                  <strong>220+ digitally preserved retro & modern games</strong> with unblocked stealth proxy and live in-browser development environment. Pure performance, zero latency, inspired by the essence of arcade gaming.
+                </p>
+              </div>
+            </div>
+
+            <!-- Collections Button with Chromatic Aberration Arrow -->
             <div>
-              <button class="btn-collections-action" onclick="switchTab('games')">
+              <button class="retro-btn-collections" onclick="switchTab('games')" title="Browse All 220+ Games">
                 <span>COLLECTIONS</span>
-                <span class="btn-arrow-icon">▶</span>
+                <img src="assets/arrow_svg.svg" alt="Arrow" class="retro-arrow-icon" />
               </button>
             </div>
           </div>
+
+          <!-- Right Column: 3D Blooming Skull Flower Artwork -->
+          <div class="hero-art-display">
+            <img src="assets/hero-skull-flower.jpg" alt="Skeletal Flowers Artwork" class="hero-flower-img" />
+          </div>
+
         </div>
 
         <!-- Live Stats Overview -->

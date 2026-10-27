@@ -1,31 +1,45 @@
 /* ==========================================================================
-   GAMES V7 — RETRO-FUTURISTIC SKELETAL FLOWERS DESIGN SYSTEM
+   GAMES V7 — RETRO SKELETAL FLOWERS DESIGN SYSTEM
+   Solid Color Palette & Buttery Smooth UI Animations
    ========================================================================== */
 
 :root {
-  --bg-deep: #050609;
-  --bg-surface: #0a0d16;
-  --bg-surface-elevated: #111524;
-  --bg-window: rgba(10, 13, 22, 0.88);
-  --border-window: rgba(255, 255, 255, 0.85);
-  --border-subtle: rgba(255, 255, 255, 0.12);
-  --border-glow: rgba(255, 42, 75, 0.4);
+  /* Solid Pure Dark Backgrounds (No distracting glow blobs) */
+  --bg-solid: #06070a;
+  --bg-surface: #0c0e15;
+  --bg-surface-elevated: #121622;
+  --bg-window: rgba(10, 13, 20, 0.94);
   
+  /* Crisp Borders */
+  --border-window: rgba(255, 255, 255, 0.9);
+  --border-subtle: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.3);
+  --border-glow: rgba(255, 42, 75, 0.5);
+  
+  /* Neon Palette from Screenshot */
   --accent-crimson: #ff2a4b;
-  --accent-crimson-glow: rgba(255, 42, 75, 0.55);
+  --accent-crimson-hover: #ff4765;
+  --accent-crimson-glow: rgba(255, 42, 75, 0.45);
   --accent-indigo: #4f46e5;
-  --accent-indigo-glow: rgba(79, 70, 229, 0.55);
+  --accent-indigo-glow: rgba(79, 70, 229, 0.45);
   --accent-cyan: #06b6d4;
   --accent-amber: #f59e0b;
   --accent-emerald: #10b981;
   
+  /* Typography */
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-dim: #64748b;
   
-  --font-retro-title: 'Courier New', 'SF Mono', Consolas, 'Lucida Console', monospace;
-  --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: 'Courier New', 'SF Mono', Monaco, Consolas, monospace;
+  --font-retro-title: 'Orbitron', 'Courier New', monospace;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Space Grotesk', 'Courier New', monospace;
+
+  /* Smooth Timing Curve */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 0.15s var(--ease-smooth);
+  --transition-normal: 0.25s var(--ease-smooth);
+  --transition-slow: 0.35s var(--ease-smooth);
 }
 
 * {
@@ -33,64 +47,43 @@
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-html, body {
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-solid);
+}
+
+body {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--bg-deep);
+  background-color: var(--bg-solid);
   color: var(--text-main);
   font-family: var(--font-sans);
   overflow-x: hidden;
   position: relative;
 }
 
-/* Ambient Cyberpunk Glow Gradients */
-body::before {
-  content: '';
-  position: fixed;
-  top: -150px;
-  left: -150px;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--accent-crimson-glow) 0%, transparent 70%);
-  opacity: 0.18;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(80px);
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  bottom: -150px;
-  right: -150px;
-  width: 650px;
-  height: 650px;
-  background: radial-gradient(circle, var(--accent-indigo-glow) 0%, transparent 70%);
-  opacity: 0.22;
-  pointer-events: none;
-  z-index: 0;
-  filter: blur(90px);
-}
-
-/* Custom Scrollbars */
+/* Custom Smooth Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-deep);
+  background: var(--bg-solid);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.18);
   border-radius: 4px;
+  transition: background var(--transition-fast);
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-crimson);
 }
 
-/* CRT Scanlines Overlay */
+/* Optional CRT Scanlines Overlay */
 .crt-overlay {
   position: fixed;
   inset: 0;
@@ -98,16 +91,16 @@ body::after {
   z-index: 99999;
   background: linear-gradient(
     rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.25) 50%
+    rgba(0, 0, 0, 0.22) 50%
   ), linear-gradient(
     90deg,
-    rgba(255, 0, 0, 0.03),
+    rgba(255, 0, 0, 0.02),
     rgba(0, 255, 0, 0.01),
-    rgba(0, 0, 255, 0.03)
+    rgba(0, 0, 255, 0.02)
   );
   background-size: 100% 3px, 6px 100%;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+  opacity: 0.55;
+  transition: opacity var(--transition-normal);
 }
 .crt-overlay.disabled {
   display: none !important;
@@ -122,15 +115,13 @@ body::after {
   top: 0;
   z-index: 1000;
   height: 64px;
-  background: rgba(5, 6, 9, 0.88);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: var(--bg-solid);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 32px;
-  transition: all 0.2s ease;
+  transition: border-color var(--transition-normal);
 }
 
 .nav-brand {
@@ -140,13 +131,16 @@ body::after {
   text-decoration: none;
   cursor: pointer;
   user-select: none;
+  transition: transform var(--transition-fast);
+}
+.nav-brand:active {
+  transform: scale(0.98);
 }
 
 .brand-flower-icon {
   width: 34px;
   height: 34px;
-  filter: drop-shadow(0 0 8px var(--accent-crimson-glow));
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-normal);
 }
 .nav-brand:hover .brand-flower-icon {
   transform: rotate(15deg) scale(1.08);
@@ -187,17 +181,21 @@ body::after {
   font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 3px;
-  color: #cbd5e1;
+  color: #94a3b8;
   text-transform: uppercase;
   cursor: pointer;
   position: relative;
   padding: 8px 4px;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast), transform var(--transition-fast);
 }
 
 .nav-tab-btn:hover {
   color: #ffffff;
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+  transform: translateY(-1px);
+}
+.nav-tab-btn:active {
+  transform: scale(0.96);
 }
 
 .nav-tab-btn.active {
@@ -212,8 +210,14 @@ body::after {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--accent-crimson), var(--accent-indigo));
+  background: var(--accent-crimson);
   box-shadow: 0 0 8px var(--accent-crimson);
+  animation: slideIndicator 0.25s var(--ease-smooth);
+}
+
+@keyframes slideIndicator {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
 }
 
 /* Right Navigation Quick Tools */
@@ -237,15 +241,18 @@ body::after {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
   user-select: none;
 }
 
 .nav-pill-btn:hover {
   background: rgba(255, 255, 255, 0.12);
   color: #fff;
-  border-color: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-1px);
+}
+.nav-pill-btn:active {
+  transform: scale(0.97);
 }
 
 .nav-pill-panic {
@@ -261,7 +268,7 @@ body::after {
 }
 
 /* ==========================================================================
-   MAIN VIEWS CONTAINER
+   MAIN VIEWS CONTAINER & SMOOTH TAB ANIMATIONS
    ========================================================================== */
 
 main {
@@ -269,96 +276,77 @@ main {
   z-index: 10;
   width: 100%;
   min-height: calc(100vh - 64px);
+  background: var(--bg-solid);
+}
+
+@keyframes smoothTabIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tab-view {
-  display: none;
+  display: none !important;
   width: 100%;
   min-height: calc(100vh - 64px);
-  animation: fadeIn 0.25s ease;
 }
 
 .tab-view.active {
-  display: block;
+  display: block !important;
+  animation: smoothTabIn 0.28s var(--ease-smooth);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
+#home-view.active {
+  display: flex !important;
 }
-
-/* ==========================================================================
-   1. HOME TAB — SKELETAL FLOWERS SHOWCASE
-   ========================================================================== */
 
 #home-view {
-  position: relative;
-  overflow: hidden;
   padding: 40px 32px 80px;
-  display: flex;
   flex-direction: column;
   align-items: center;
+  background: var(--bg-solid);
 }
 
-/* Background Artwork Showcase */
-.hero-backdrop-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow: hidden;
-  z-index: 0;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.hero-art-img {
+.hero-showcase-container {
   width: 100%;
   max-width: 1200px;
-  height: auto;
-  opacity: 0.38;
-  filter: contrast(1.15) brightness(0.85);
-  mask-image: radial-gradient(circle at center, black 40%, transparent 75%);
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 75%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 1100px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 32px;
-  margin-top: 40px;
+  gap: 40px;
 }
 
-.hero-headline-wrap {
+/* Side-by-side on desktop, stacked on mobile */
+.hero-stage-layout {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 36px;
+  align-items: center;
+  min-height: 480px;
+}
+
+@media (max-width: 900px) {
+  .hero-stage-layout {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.hero-info-column {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 24px;
+  z-index: 2;
 }
 
-.hero-main-title {
-  font-family: var(--font-retro-title);
-  font-size: clamp(34px, 5.5vw, 68px);
-  font-weight: 900;
-  letter-spacing: clamp(4px, 1.2vw, 10px);
-  color: #ffffff;
-  text-transform: uppercase;
-  text-shadow: 
-    0 0 15px rgba(255, 42, 75, 0.7),
-    2px 2px 0px rgba(79, 70, 229, 0.8),
-    -2px -2px 0px rgba(255, 42, 75, 0.8);
-  line-height: 1.1;
-}
-
-.hero-subtitle-tag {
+.hero-eyebrow {
   font-family: var(--font-retro-title);
   font-size: 13px;
   color: var(--accent-crimson);
@@ -367,150 +355,197 @@ main {
   text-transform: uppercase;
 }
 
-/* The Classic Retro Window (Matches User Screenshot) */
-.retro-os-window {
-  width: 100%;
-  max-width: 580px;
-  border: 1.5px solid var(--border-window);
-  background: rgba(6, 8, 14, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  box-shadow: 
-    0 24px 60px rgba(0, 0, 0, 0.85),
-    0 0 30px rgba(255, 42, 75, 0.15),
-    inset 0 0 20px rgba(255, 255, 255, 0.02);
-  border-radius: 2px;
+/* CRT 3D Glitch Title (Red + Blue/Cyan + White) */
+.crt-title-container {
   position: relative;
-  margin-top: 10px;
-}
-
-.window-titlebar {
-  height: 30px;
-  border-bottom: 1.5px solid var(--border-window);
-  background: rgba(255, 255, 255, 0.04);
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 8px;
+  display: inline-block;
   user-select: none;
 }
 
-.window-controls-group {
+.crt-sf {
+  font-family: var(--font-retro-title);
+  font-size: clamp(32px, 4.5vw, 56px);
+  font-weight: 900;
+  letter-spacing: clamp(4px, 1vw, 8px);
+  text-transform: uppercase;
+  line-height: 1.08;
+  margin: 0;
+}
+
+.crt-sf.red {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 3px;
+  color: #ff1a40;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+.crt-sf.blue {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: -3px;
+  color: #00ffe2;
+  opacity: 0.85;
+  mix-blend-mode: screen;
+}
+
+.crt-sf.main {
+  position: relative;
+  color: #ffffff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+/* Classic Retro Browser Window (Matches User Screenshot) */
+.retro-browser-window {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  border: 1px solid #ffffff;
+  background: rgba(8, 10, 16, 0.7);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.85),
+    0 0 1px rgba(255, 255, 255, 0.8);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.retro-browser-window:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 26px 65px rgba(0, 0, 0, 0.95),
+    0 0 24px rgba(255, 42, 75, 0.25);
+}
+
+.retro-browser-bar {
   display: flex;
+  width: 100%;
+  height: 24px;
+  padding: 3px 6px;
+  justify-content: flex-end;
   align-items: center;
-  gap: 5px;
+  background-color: #ffffff;
+  user-select: none;
 }
 
-.win-btn {
-  width: 16px;
-  height: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.85);
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-family: monospace;
-  color: #fff;
-  cursor: pointer;
-  line-height: 1;
-  transition: all 0.15s ease;
+.retro-controls-img {
+  height: 14px;
+  width: auto;
+  display: block;
 }
 
-.win-btn:hover {
-  background: #ffffff;
-  color: #000000;
+.retro-window-body {
+  padding: 24px 28px;
 }
 
-.window-body {
-  padding: 26px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.window-body-text {
+.retro-window-body p {
   font-family: var(--font-mono);
-  font-size: 14.5px;
-  line-height: 1.7;
+  font-size: 14px;
+  line-height: 1.65;
   color: #cbd5e1;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
-.window-body-text strong {
+.retro-window-body strong {
   color: #ffffff;
   font-weight: 700;
 }
 
-/* Collections Button Matching Screenshot */
-.btn-collections-action {
+/* Collections Button with Chromatic Arrow */
+.retro-btn-collections {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   background: transparent;
   border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  user-select: none;
+  transition: transform var(--transition-fast);
+}
+
+.retro-btn-collections span {
   font-family: var(--font-retro-title);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
-  letter-spacing: 4px;
+  letter-spacing: 5px;
   color: #ffffff;
   text-transform: uppercase;
-  cursor: pointer;
-  padding: 6px 0;
-  transition: all 0.2s ease;
-  user-select: none;
+  text-shadow: 2px 0px 0px #ff1a40, -2px 0px 0px #00ffe2;
+  transition: color var(--transition-fast);
 }
 
-.btn-collections-action:hover {
-  color: var(--accent-crimson);
-  text-shadow: 0 0 14px var(--accent-crimson-glow);
-  transform: translateX(4px);
+.retro-arrow-icon {
+  height: 20px;
+  width: auto;
+  transition: transform var(--transition-fast);
 }
 
-.btn-arrow-icon {
-  display: inline-flex;
+.retro-btn-collections:hover span {
+  color: #00ffe2;
+}
+
+.retro-btn-collections:hover .retro-arrow-icon {
+  transform: translateX(6px) scale(1.15);
+}
+
+.retro-btn-collections:active {
+  transform: scale(0.97);
+}
+
+/* Center/Right 3D Blooming Skull Flower Artwork */
+.hero-art-display {
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 22px;
-  height: 22px;
-  background: var(--accent-crimson);
-  color: #ffffff;
-  clip-path: polygon(0 0, 0 100%, 100% 50%);
-  filter: drop-shadow(0 0 8px var(--accent-crimson));
-  transition: transform 0.2s ease;
+  position: relative;
 }
 
-.btn-collections-action:hover .btn-arrow-icon {
-  transform: scale(1.15) translateX(3px);
+.hero-flower-img {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.95));
+  transition: transform var(--transition-slow);
+}
+
+.hero-art-display:hover .hero-flower-img {
+  transform: scale(1.03);
 }
 
 /* Live Stats Strip */
 .stats-strip {
   width: 100%;
-  max-width: 1100px;
-  margin-top: 50px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 18px;
+  margin-top: 20px;
 }
 
 .stat-card {
-  background: rgba(14, 18, 30, 0.7);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 18px 20px;
   display: flex;
   align-items: center;
   gap: 16px;
-  backdrop-filter: blur(10px);
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal);
+  cursor: pointer;
 }
 
 .stat-card:hover {
   border-color: var(--border-glow);
-  background: rgba(22, 28, 46, 0.8);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  background: var(--bg-surface-elevated);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+.stat-card:active {
+  transform: translateY(-1px) scale(0.99);
 }
 
 .stat-icon {
@@ -523,6 +558,11 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform var(--transition-fast);
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.1);
 }
 
 .stat-info {
@@ -569,7 +609,7 @@ main {
 
 .search-input-field {
   width: 100%;
-  background: rgba(12, 16, 26, 0.85);
+  background: var(--bg-surface);
   border: 1.5px solid var(--border-window);
   border-radius: 4px;
   padding: 14px 44px 14px 46px;
@@ -579,7 +619,7 @@ main {
   letter-spacing: 0.5px;
   outline: none;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transition: all 0.2s ease;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .search-input-field:focus {
@@ -606,6 +646,10 @@ main {
   color: var(--text-dim);
   font-size: 16px;
   cursor: pointer;
+  transition: color var(--transition-fast);
+}
+.btn-clear-search:hover {
+  color: #ffffff;
 }
 
 /* Category Filter Chips */
@@ -616,7 +660,7 @@ main {
 }
 
 .filter-chip {
-  background: rgba(15, 20, 32, 0.7);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 7px 16px;
@@ -626,7 +670,7 @@ main {
   letter-spacing: 1px;
   color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
   user-select: none;
 }
 
@@ -634,6 +678,10 @@ main {
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
   border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+.filter-chip:active {
+  transform: scale(0.96);
 }
 
 .filter-chip.active {
@@ -643,7 +691,7 @@ main {
   box-shadow: 0 0 12px var(--accent-crimson-glow);
 }
 
-/* Games Grid */
+/* Games Grid with Smooth Card Hover */
 .games-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(215px, 1fr));
@@ -651,21 +699,24 @@ main {
 }
 
 .game-card {
-  background: rgba(14, 18, 30, 0.75);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 6px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.22s ease;
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
   cursor: pointer;
   position: relative;
 }
 
 .game-card:hover {
   border-color: var(--border-window);
-  transform: translateY(-4px) scale(1.02);
+  transform: translateY(-4px) scale(1.015);
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7), 0 0 20px var(--accent-crimson-glow);
+}
+.game-card:active {
+  transform: translateY(-2px) scale(1.0);
 }
 
 .game-card-thumb-wrap {
@@ -681,11 +732,11 @@ main {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform var(--transition-slow);
 }
 
 .game-card:hover .game-card-thumb {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .game-card-badge {
@@ -742,7 +793,7 @@ main {
   width: 100%;
   padding: 8px 0;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.25);
   color: #ffffff;
   font-family: var(--font-retro-title);
   font-size: 11px;
@@ -751,13 +802,16 @@ main {
   text-transform: uppercase;
   border-radius: 3px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
 }
 
 .game-card:hover .btn-play-card {
   background: var(--accent-crimson);
   border-color: var(--accent-crimson);
   box-shadow: 0 0 10px var(--accent-crimson-glow);
+}
+.btn-play-card:active {
+  transform: scale(0.96);
 }
 
 /* ==========================================================================
@@ -773,6 +827,12 @@ main {
   flex-direction: column;
   width: 100%;
   height: 100%;
+  animation: modalFadeIn 0.22s var(--ease-smooth);
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.995); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 #game-player-modal.hidden {
@@ -781,7 +841,7 @@ main {
 
 .player-header {
   height: 50px;
-  background: rgba(10, 13, 22, 0.95);
+  background: rgba(10, 13, 20, 0.98);
   border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
@@ -810,12 +870,15 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
 }
 
 .btn-player-back:hover {
   background: var(--accent-crimson);
   border-color: var(--accent-crimson);
+}
+.btn-player-back:active {
+  transform: scale(0.96);
 }
 
 .player-title {
@@ -843,12 +906,15 @@ main {
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
 }
 
 .player-ctrl-btn:hover {
   background: rgba(255, 255, 255, 0.15);
   color: #fff;
+}
+.player-ctrl-btn:active {
+  transform: scale(0.96);
 }
 
 #game-iframe {
@@ -876,11 +942,17 @@ main {
   display: flex;
   align-items: center;
   gap: 12px;
-  background: rgba(12, 16, 26, 0.9);
+  background: var(--bg-surface);
   border: 1.5px solid var(--border-window);
   border-radius: 4px;
   padding: 8px 14px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.proxy-omnibar-box:focus-within {
+  border-color: var(--accent-crimson);
+  box-shadow: 0 0 20px var(--accent-crimson-glow);
 }
 
 .proxy-input {
@@ -904,12 +976,15 @@ main {
   padding: 8px 18px;
   border-radius: 3px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
 }
 
 .btn-proxy-go:hover {
   box-shadow: 0 0 14px var(--accent-crimson-glow);
   filter: brightness(1.1);
+}
+.btn-proxy-go:active {
+  transform: scale(0.96);
 }
 
 .proxy-bookmarks-grid {
@@ -919,7 +994,7 @@ main {
 }
 
 .proxy-bookmark-card {
-  background: rgba(14, 18, 30, 0.7);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 12px 10px;
@@ -928,19 +1003,26 @@ main {
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  transition: all 0.18s ease;
+  transition: all var(--transition-normal);
   user-select: none;
 }
 
 .proxy-bookmark-card:hover {
-  background: rgba(26, 35, 58, 0.9);
+  background: var(--bg-surface-elevated);
   border-color: var(--accent-crimson);
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
+}
+.proxy-bookmark-card:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .bookmark-icon {
   font-size: 24px;
+  transition: transform var(--transition-fast);
+}
+.proxy-bookmark-card:hover .bookmark-icon {
+  transform: scale(1.12);
 }
 
 .bookmark-name {
@@ -984,7 +1066,7 @@ main {
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  background: rgba(12, 16, 26, 0.9);
+  background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
   border-radius: 4px;
   padding: 10px 16px;
@@ -997,7 +1079,7 @@ main {
 }
 
 .editor-select {
-  background: rgba(18, 24, 38, 0.9);
+  background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   color: #ffffff;
   font-family: var(--font-retro-title);
@@ -1007,6 +1089,10 @@ main {
   border-radius: 3px;
   outline: none;
   cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+.editor-select:focus {
+  border-color: var(--accent-crimson);
 }
 
 .editor-toolbar-right {
@@ -1029,12 +1115,15 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
 }
 
 .editor-btn:hover {
   background: rgba(255, 255, 255, 0.18);
   transform: translateY(-1px);
+}
+.editor-btn:active {
+  transform: scale(0.96);
 }
 
 .editor-btn-run {
@@ -1158,8 +1247,7 @@ main {
 
 .settings-card {
   border: 1.5px solid var(--border-window);
-  background: rgba(12, 16, 26, 0.85);
-  backdrop-filter: blur(16px);
+  background: var(--bg-surface);
   border-radius: 4px;
   padding: 32px;
   display: flex;
@@ -1206,7 +1294,7 @@ main {
 }
 
 .settings-select {
-  background: rgba(18, 24, 38, 0.95);
+  background: var(--bg-surface-elevated);
   border: 1px solid var(--border-subtle);
   color: #ffffff;
   font-family: var(--font-mono);
@@ -1216,6 +1304,10 @@ main {
   outline: none;
   cursor: pointer;
   min-width: 220px;
+  transition: border-color var(--transition-fast);
+}
+.settings-select:focus {
+  border-color: var(--accent-crimson);
 }
 
 .btn-settings-action {
@@ -1229,7 +1321,7 @@ main {
   padding: 9px 18px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all var(--transition-fast);
 }
 
 .btn-settings-action:hover {
@@ -1237,8 +1329,11 @@ main {
   border-color: var(--accent-crimson);
   box-shadow: 0 0 12px var(--accent-crimson-glow);
 }
+.btn-settings-action:active {
+  transform: scale(0.97);
+}
 
-/* Toggle Switch */
+/* Smooth Toggle Switch */
 .toggle-switch {
   position: relative;
   display: inline-block;
@@ -1255,7 +1350,7 @@ main {
   cursor: pointer;
   inset: 0;
   background-color: rgba(255, 255, 255, 0.15);
-  transition: .3s;
+  transition: background-color var(--transition-normal);
   border-radius: 26px;
 }
 .slider:before {
@@ -1266,7 +1361,7 @@ main {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  transition: .3s;
+  transition: transform var(--transition-normal);
   border-radius: 50%;
 }
 input:checked + .slider {
