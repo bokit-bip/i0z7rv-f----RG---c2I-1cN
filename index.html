@@ -1,850 +1,439 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Google Drive</title>
-<link id="tab-favicon" rel="icon" type="image/svg+xml" href="">
-<style>:root{--bg:#07090e;--surface:rgba(15, 20, 32, 0.7);--surface-border:rgba(255, 255, 255, 0.08);--card-bg:rgba(17, 23, 38, 0.65);--card-hover:rgba(26, 35, 58, 0.85);--accent:#6366f1;--accent-glow:rgba(99, 102, 241, 0.4);--accent-gradient:linear-gradient(135deg, #6366f1, #8b5cf6);--text:#f8fafc;--text-muted:#94a3b8;--text-dim:#64748b;}*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased;}body{background:var(--bg);background-image:radial-gradient(circle at 15% 15%, rgba(99,102,241,0.1) 0%, transparent 40%), radial-gradient(circle at 85% 85%, rgba(139,92,246,0.08) 0%, transparent 45%);background-attachment:fixed;color:var(--text);font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;min-height:100vh;overflow-x:hidden;scroll-behavior:smooth;}.top-nav{position:sticky;top:0;z-index:100;height:60px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(7, 9, 14, 0.82);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;transition:background 0.2s ease;}.nav-brand{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}.brand-icon{width:36px;height:36px;border-radius:10px;background:var(--accent-gradient);display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 0 16px var(--accent-glow);}.brand-text h1{font-size:16px;font-weight:800;letter-spacing:-0.3px;background:linear-gradient(135deg, #fff 40%, #cbd5e1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:flex;align-items:center;gap:8px;}.brand-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:12px;background:rgba(16, 185, 129, 0.15);border:1px solid rgba(16, 185, 129, 0.35);color:#34d399;-webkit-text-fill-color:#34d399;}.nav-actions{display:flex;align-items:center;gap:10px;}.nav-pill{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--surface-border);border-radius:8px;color:var(--text-muted);font-size:12px;font-weight:600;padding:6px 12px;cursor:pointer;outline:none;transition:all 0.15s ease;}.nav-pill:hover{background:rgba(255, 255, 255, 0.1);color:#fff;border-color:rgba(255, 255, 255, 0.2);}.nav-pill-proxy{background:linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(139, 92, 246, 0.25));border:1px solid rgba(99, 102, 241, 0.5);color:#c7d2fe;font-weight:700;box-shadow:0 0 10px rgba(99, 102, 241, 0.2);}.nav-pill-proxy:hover{background:var(--accent-gradient);color:#fff;border-color:#6366f1;box-shadow:0 0 18px var(--accent-glow);transform:translateY(-1px);}.nav-pill-direct{background:linear-gradient(135deg, rgba(234, 179, 8, 0.22), rgba(245, 158, 11, 0.22));border:1px solid rgba(245, 158, 11, 0.5);color:#fde047;font-weight:700;text-decoration:none;box-shadow:0 0 10px rgba(234, 179, 8, 0.15);transition:all 0.15s ease;}.nav-pill-direct:hover{background:linear-gradient(135deg, #eab308, #f59e0b);color:#0b0e14;border-color:#eab308;box-shadow:0 0 16px rgba(234, 179, 8, 0.45);transform:translateY(-1px);}.nav-pill-panic{background:rgba(239, 68, 68, 0.15);border-color:rgba(239, 68, 68, 0.35);color:#fca5a5;}.nav-pill-panic:hover{background:#ef4444;color:#fff;border-color:#ef4444;box-shadow:0 0 14px rgba(239, 68, 68, 0.5);}.nav-select{background:#111520;}.hero{max-width:1400px;margin:28px auto 20px;padding:0 24px;display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;}.hero-title{font-size:32px;font-weight:800;letter-spacing:-0.8px;background:linear-gradient(135deg, #ffffff 30%, #94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.hero-desc{color:var(--text-muted);font-size:14px;max-width:620px;line-height:1.5;}.search-wrapper{position:relative;width:100%;max-width:540px;margin-top:6px;}.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none;}.search-input{width:100%;background:rgba(15, 20, 32, 0.85);backdrop-filter:blur(12px);border:1px solid var(--surface-border);border-radius:12px;padding:13px 44px 13px 44px;color:#fff;font-size:14.5px;outline:none;transition:all 0.2s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 20px rgba(0, 0, 0, 0.25);}.search-input:focus{border-color:var(--accent);background:rgba(20, 27, 45, 0.95);box-shadow:0 0 20px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.4);}.search-kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;font-weight:700;color:var(--text-dim);background:rgba(255, 255, 255, 0.06);padding:3px 6px;border-radius:5px;border:1px solid rgba(255, 255, 255, 0.08);pointer-events:none;}.categories-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:900px;margin-top:4px;}.chip{background:rgba(18, 24, 38, 0.65);border:1px solid var(--surface-border);border-radius:20px;padding:7px 15px;font-size:12.5px;font-weight:600;color:var(--text-muted);cursor:pointer;outline:none;transition:all 0.18s cubic-bezier(0.16, 1, 0.3, 1);user-select:none;}.chip:hover{background:rgba(28, 38, 60, 0.85);color:#fff;border-color:rgba(255, 255, 255, 0.18);transform:translateY(-1px);}.chip.active{background:var(--accent-gradient);color:#fff;border-color:transparent;box-shadow:0 2px 14px var(--accent-glow);}.chip-proxy{border-color:rgba(99, 102, 241, 0.4);color:#c7d2fe;}.counter-pill{font-size:12px;color:var(--text-dim);font-weight:600;letter-spacing:0.2px;}.grid-container{max-width:1440px;margin:12px auto 60px;padding:0 24px;}.grid{display:grid;grid-template-columns:repeat(auto-fill, minmax(215px, 1fr));gap:18px;}.card{background:var(--card-bg);border:1px solid var(--surface-border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:all 0.25s cubic-bezier(0.16, 1, 0.3, 1);cursor:pointer;position:relative;}.card:hover{background:var(--card-hover);border-color:rgba(99, 102, 241, 0.45);transform:translateY(-4px) scale(1.015);box-shadow:0 12px 28px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-glow);}.card-thumb-wrap{width:100%;aspect-ratio:16 / 10;position:relative;background:#0d111c;overflow:hidden;}.card-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);}.card:hover .card-thumb{transform:scale(1.06);}.quick-play-btn{position:absolute;inset:0;background:rgba(7, 9, 14, 0.5);backdrop-filter:blur(2px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity 0.2s ease;color:#fff;font-size:28px;}.card:hover .quick-play-btn{opacity:1;}.card-badge{position:absolute;top:9px;left:9px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;padding:3px 8px;border-radius:6px;backdrop-filter:blur(8px);z-index:2;}.cat-rose{background:rgba(244, 63, 94, 0.2);border:1px solid rgba(244, 63, 94, 0.4);color:#fb7185;}.cat-emerald{background:rgba(16, 185, 129, 0.2);border:1px solid rgba(16, 185, 129, 0.4);color:#34d399;}.cat-purple{background:rgba(168, 85, 247, 0.2);border:1px solid rgba(168, 85, 247, 0.4);color:#c084fc;}.cat-cyan{background:rgba(6, 182, 212, 0.2);border:1px solid rgba(6, 182, 212, 0.4);color:#22d3ee;}.cat-amber{background:rgba(245, 158, 11, 0.2);border:1px solid rgba(245, 158, 11, 0.4);color:#fbbf24;}.cat-yellow{background:rgba(234, 179, 8, 0.2);border:1px solid rgba(234, 179, 8, 0.4);color:#fde047;}.cat-sky{background:rgba(14, 165, 233, 0.2);border:1px solid rgba(14, 165, 233, 0.4);color:#38bdf8;}.cat-orange{background:rgba(249, 115, 22, 0.2);border:1px solid rgba(249, 115, 22, 0.4);color:#fb923c;}.cat-green{background:rgba(34, 197, 94, 0.2);border:1px solid rgba(34, 197, 94, 0.4);color:#4ade80;}.cat-indigo{background:rgba(99, 102, 241, 0.2);border:1px solid rgba(99, 102, 241, 0.4);color:#818cf8;}.card-content{padding:13px 14px;flex:1;display:flex;flex-direction:column;justify-content:space-between;gap:10px;}.card-title{font-size:14.5px;font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;letter-spacing:-0.2px;}.card-sub{font-size:11.5px;color:var(--text-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}.card-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;}.card-btn{padding:7px 0;border-radius:7px;font-size:11.5px;font-weight:700;cursor:pointer;border:none;display:flex;align-items:center;justify-content:center;gap:5px;transition:all 0.15s ease;}.card-btn-primary{background:var(--accent-gradient);color:#fff;box-shadow:0 2px 8px rgba(99, 102, 241, 0.3);}.card-btn-primary:hover{box-shadow:0 4px 14px var(--accent-glow);filter:brightness(1.1);}.card-btn-secondary{background:rgba(255, 255, 255, 0.05);border:1px solid var(--surface-border);color:var(--text-muted);}.card-btn-secondary:hover{background:rgba(255, 255, 255, 0.1);color:#fff;}@keyframes modalFadeIn{from{transform:scale(0.995);}to{transform:scale(1);}}#modal-game-player{position:fixed;inset:0;z-index:99999;background:#05070a;display:flex;flex-direction:column;overflow:hidden;width:100%;height:100%;animation:modalFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);}#modal-game-player.hidden{display:none !important;}.player-top-bar{height:52px;background:rgba(15, 20, 32, 0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:12px;flex-shrink:0;user-select:none;}.player-bar-left{display:flex;align-items:center;gap:12px;min-width:0;}.player-btn-back{background:linear-gradient(135deg, rgba(99,102,241,0.22), rgba(79,70,229,0.3));border:1px solid rgba(99,102,241,0.45);color:#a5b4fc;padding:6px 13px;border-radius:7px;font-size:12.5px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.15s ease;}.player-btn-back:hover{background:var(--accent);color:#fff;box-shadow:0 2px 10px var(--accent-glow);}.player-game-title{font-size:14.5px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.player-live-dot{width:7px;height:7px;border-radius:50%;background:#10b981;box-shadow:0 0 8px #10b981;display:inline-block;}.player-bar-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}.player-btn, .player-select{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 11px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;color:#e2e8f0;font-size:12px;font-weight:600;cursor:pointer;outline:none;transition:all 0.15s ease;}.player-btn:hover{background:rgba(255,255,255,0.12);color:#fff;border-color:rgba(255,255,255,0.22);}.player-btn-panic{background:rgba(239, 68, 68, 0.18);border-color:rgba(239, 68, 68, 0.4);color:#fca5a5;}.player-btn-panic:hover{background:#ef4444;color:#fff;}.player-viewport{position:relative;flex:1;width:100%;height:calc(100% - 52px);background:#000;overflow:hidden;}#player-iframe{width:100%;height:100%;border:0;display:block;background:#000;}.player-loading-spinner{position:absolute;inset:0;background:rgba(5, 7, 10, 0.94);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;z-index:10;color:#e2e8f0;font-size:14px;font-weight:600;transition:opacity 0.25s ease;}.player-loading-spinner.hidden{opacity:0;pointer-events:none;}.spinner-ring{width:44px;height:44px;border-radius:50%;border:3px solid rgba(99, 102, 241, 0.2);border-top-color:#6366f1;animation:spin 0.75s linear infinite;}@keyframes spin{to{transform:rotate(360deg);}}#modal-proxy-browser{position:fixed;inset:0;z-index:99999;background:#06080e;display:flex;flex-direction:column;overflow:hidden;width:100%;height:100%;animation:modalFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);}#modal-proxy-browser.hidden{display:none !important;}.proxy-top-bar{height:52px;background:rgba(14, 18, 28, 0.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--surface-border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px;flex-shrink:0;user-select:none;}.proxy-bar-left{display:flex;align-items:center;gap:10px;flex:1;max-width:820px;min-width:0;}.proxy-nav-btns{display:flex;align-items:center;gap:5px;}.proxy-icon-btn{width:30px;height:30px;border-radius:7px;background:rgba(255, 255, 255, 0.05);border:1px solid rgba(255, 255, 255, 0.1);color:#cbd5e1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.15s ease;}.proxy-icon-btn:hover{background:rgba(255, 255, 255, 0.14);color:#fff;border-color:rgba(255, 255, 255, 0.25);}.proxy-omnibar-wrap{position:relative;flex:1;display:flex;align-items:center;min-width:0;}.proxy-lock-icon{position:absolute;left:11px;color:#10b981;pointer-events:none;}.proxy-omnibar{width:100%;background:rgba(7, 10, 18, 0.85);border:1px solid rgba(255, 255, 255, 0.12);border-radius:20px;padding:7px 75px 7px 32px;color:#f1f5f9;font-size:13px;outline:none;transition:all 0.18s ease;font-family:inherit;}.proxy-omnibar:focus{background:rgba(10, 14, 25, 0.98);border-color:var(--accent);box-shadow:0 0 16px var(--accent-glow);}.proxy-go-btn{position:absolute;right:4px;top:50%;transform:translateY(-50%);background:var(--accent-gradient);border:none;color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:14px;cursor:pointer;transition:all 0.15s ease;}.proxy-go-btn:hover{filter:brightness(1.15);box-shadow:0 0 10px var(--accent-glow);}.proxy-bar-right{display:flex;align-items:center;gap:7px;flex-shrink:0;}.proxy-viewport{position:relative;flex:1;width:100%;height:calc(100% - 52px);background:#07090e;overflow:hidden;}#proxy-iframe{width:100%;height:100%;border:0;display:none;background:#fff;}.proxy-start-page{position:absolute;inset:0;background:#07090e;background-image:radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(139,92,246,0.1) 0%, transparent 50%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;overflow-y:auto;z-index:5;}.proxy-start-page.hidden{display:none !important;}.proxy-start-content{max-width:760px;width:100%;display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center;}.proxy-logo-badge{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:rgba(99, 102, 241, 0.15);border:1px solid rgba(99, 102, 241, 0.35);color:#a5b4fc;font-size:12px;font-weight:700;letter-spacing:0.5px;}.proxy-start-title{font-size:34px;font-weight:800;letter-spacing:-0.6px;background:linear-gradient(135deg, #ffffff 40%, #94a3b8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.proxy-start-sub{color:var(--text-muted);font-size:14px;max-width:540px;line-height:1.5;}.proxy-main-search-wrap{position:relative;width:100%;max-width:620px;margin:6px 0 14px;}.proxy-main-search-input{width:100%;background:rgba(15, 20, 32, 0.95);border:1px solid var(--surface-border);border-radius:14px;padding:15px 105px 15px 46px;color:#fff;font-size:15px;outline:none;box-shadow:0 4px 24px rgba(0, 0, 0, 0.4);transition:all 0.2s ease;}.proxy-main-search-input:focus{border-color:var(--accent);box-shadow:0 0 24px var(--accent-glow), 0 4px 24px rgba(0,0,0,0.5);}.proxy-main-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-dim);pointer-events:none;}.proxy-main-search-btn{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--accent-gradient);border:none;border-radius:10px;color:#fff;font-size:13px;font-weight:700;padding:9px 18px;cursor:pointer;transition:all 0.15s ease;}.proxy-main-search-btn:hover{box-shadow:0 0 14px var(--accent-glow);filter:brightness(1.1);}.proxy-presets-label{font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.8px;text-transform:uppercase;margin-top:8px;}.proxy-presets-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px;width:100%;max-width:720px;}.proxy-preset-card{background:rgba(17, 23, 38, 0.7);border:1px solid var(--surface-border);border-radius:12px;padding:12px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:all 0.18s ease;color:#e2e8f0;text-decoration:none;}.proxy-preset-card:hover{background:rgba(26, 35, 58, 0.9);border-color:rgba(99, 102, 241, 0.45);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.3);}.preset-icon{font-size:24px;}.preset-name{font-size:12.5px;font-weight:700;color:#fff;}.preset-desc{font-size:10px;color:var(--text-dim);}.proxy-loading-bar{position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg, #6366f1, #a855f7, #6366f1);background-size:200% 100%;animation:proxyProgress 1.2s infinite linear;z-index:100;display:none;}@keyframes proxyProgress{0%{background-position:100% 0;}100%{background-position:-100% 0;}}</style>
-<script>
-const ICONS = {"drive": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 87.3 78'%3E%3Cpath fill='%230066da' d='m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8H0c0 1.55.4 3.1 1.2 4.5z'/%3E%3Cpath fill='%2300ac47' d='M43.65 25 29.9 1.2c-1.35.8-2.5 1.9-3.3 3.3l-25.4 44A9.06 9.06 0 0 0 0 53h27.5z'/%3E%3Cpath fill='%23ea4335' d='m73.55 76.8c1.35-.8 2.5-1.9 3.3-3.3l1.6-2.75 7.65-13.25c.8-1.4 1.2-2.95 1.2-4.5H59.8l5.85 10.15z'/%3E%3Cpath fill='%2300832d' d='M43.65 25 57.4 1.2C56.05.4 54.5 0 52.9 0H34.4c-1.6 0-3.15.45-4.5 1.2z'/%3E%3Cpath fill='%232684fc' d='M59.8 53H87.3c0-1.55-.4-3.1-1.2-4.5L72.35 24.7c-.8-1.4-1.95-2.5-3.3-3.3L55.3 45.2z'/%3E%3Cpath fill='%23ffba00' d='m73.55 76.8-13.75-23.8H27.5l13.75 23.8c1.35.8 2.9 1.2 4.5 1.2h23.3c1.6 0 3.15-.4 4.5-1.2z'/%3E%3C/svg%3E", "classroom": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231e8e3e' d='M22 6.5C22 5.12 20.88 4 19.5 4h-15C3.12 4 2 5.12 2 6.5v11C2 18.88 3.12 20 4.5 20h15c1.38 0 2.5-1.12 2.5-2.5v-11z'/%3E%3Cpath fill='%23f9ab00' d='M20.5 5.5h-17c-.55 0-1 .45-1 1v11c0 .55.45 1 1 1h17c.55 0 1-.45 1-1v-11c0-.55-.45-1-1-1z'/%3E%3Ccircle cx='12' cy='10' r='2.2' fill='%23fff'/%3E%3Cpath fill='%23fff' d='M12 13.2c-2.4 0-4.5 1.2-4.5 2.5V17h9v-1.3c0-1.3-2.1-2.5-4.5-2.5z'/%3E%3Ccircle cx='7' cy='11' r='1.6' fill='%23fff' opacity='.8'/%3E%3Cpath fill='%23fff' opacity='.8' d='M7 13.5c-1.8 0-3.2.9-3.2 2V16h2.2v-.8c0-.6.4-1.2 1-1.7z'/%3E%3Ccircle cx='17' cy='11' r='1.6' fill='%23fff' opacity='.8'/%3E%3Cpath fill='%23fff' opacity='.8' d='M17 13.5c1.8 0 3.2.9 3.2 2V16H18v-.8c0-.6-.4-1.2-1-1.7z'/%3E%3C/svg%3E", "docs": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234285F4' d='M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6z'/%3E%3Cpath fill='%23A1C2FA' d='M14 2v6h6'/%3E%3Cpath fill='%23FFF' d='M8 12h8v1.5H8zm0 3h8v1.5H8zm0 3h5v1.5H8z'/%3E%3C/svg%3E", "canvas": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E02424' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6z'/%3E%3C/svg%3E", "desmos": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%232F7B18' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z'/%3E%3C/svg%3E", "default": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236366f1'%3E%3Cpath d='M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v3H6v-3H3v-2h3V8h2v3h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5S17.67 9 18.5 9s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z'/%3E%3C/svg%3E"};
-const TITLES = {
-drive: 'Google Drive',
-classroom: 'Classes - Google Classroom',
-docs: 'Google Docs',
-canvas: 'Canvas LMS - Dashboard',
-desmos: 'Desmos | Graphing Calculator',
-default: 'BokitWare Web Arcade'
-};
-function setGlobalCloak(key) {
-const link = document.querySelector("link[rel*='icon']");
-var fav = document.querySelector("link[rel*='icon']"); if (fav && ICONS[key]) fav.href = ICONS[key];
-if (TITLES[key]) document.title = TITLES[key];
-const hSel = document.getElementById('hub-cloak-select');
-const pSel = document.getElementById('player-cloak-select');
-const xSel = document.getElementById('proxy-cloak-select');
-if (hSel && hSel.value !== key) hSel.value = key;
-if (pSel && pSel.value !== key) pSel.value = key;
-if (xSel && xSel.value !== key) xSel.value = key;
-try { localStorage.setItem('bokit_tab_cloak', key); } catch(e) {}
-}
-function openStealth(filename, folder) {
-try {
-window.open('https://uplcm.com/4/11930399', '_blank', 'noopener,noreferrer');
-} catch(e) {}
-const win = window.open('about:blank', '_blank');
-if (!win) { alert('Popup blocked.'); return; }
-const curKey = localStorage.getItem('bokit_tab_cloak') || 'drive';
-const curTitle = TITLES[curKey] || TITLES.drive;
-const curIcon = ICONS[curKey] || ICONS.drive;
-const base = document.baseURI || window.location.href;
-const folderJson = JSON.stringify(folder || '');
-const fileJson = JSON.stringify(filename || '');
-const baseJson = JSON.stringify(base);
-const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + curTitle + '</title><link rel="icon" type="image/svg+xml" href="' + curIcon + '"><style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#0b0e14;}iframe{width:100%;height:100%;border:none;display:block;}</style></head><body><iframe id="stealth-frame" allow="fullscreen; gamepad; autoplay; clipboard-write; encrypted-media"></iframe><scr' + 'ipt>' +
-'var f = document.getElementById("stealth-frame");' +
-'var base = ' + baseJson + ';' +
-'var folder = ' + folderJson + ';' +
-'var filename = ' + fileJson + ';' +
-'var candidates = [];' +
-'if (folder) {' +
-'  candidates.push(new URL("games/" + encodeURIComponent(folder) + "/index.html", base).href);' +
-'  candidates.push(new URL("content/" + encodeURIComponent(folder) + "/index.html", base).href);' +
-'}' +
-'if (filename) candidates.push(new URL(filename, base).href);' +
-'if (folder) candidates.push("https://pop-leave.tailcb4af7.ts.net/games/" + encodeURIComponent(folder) + "/index.html");' +
-'async function run() {' +
-'  for (var i = 0; i < candidates.length; i++) {' +
-'    var u = candidates[i];' +
-'    try {' +
-'      var res = await fetch(u);' +
-'      if (res.ok) {' +
-'        var text = await res.text();' +
-'        var baseTag = "<base href=\"" + new URL("./", u).href + "\">";' +
-'        var full = text.includes("<head>") ? text.replace("<head>", "<head>" + baseTag) : (baseTag + text);' +
-'        var blob = new Blob([full], { type: "text/html" });' +
-'        f.src = URL.createObjectURL(blob);' +
-'        return;' +
-'      }' +
-'    } catch(e) {}' +
-'  }' +
-'  if (folder) f.src = "https://pop-leave.tailcb4af7.ts.net/games/" + encodeURIComponent(folder) + "/index.html";' +
-'  else if (filename) f.src = new URL(filename, base).href;' +
-'}' +
-'run();' +
-'</scr' + 'ipt></body></html>';
-win.document.open();
-win.document.write(html);
-win.document.close();
-}
-function panicNow() { window.location.replace('https://classroom.google.com'); }
-window.addEventListener('keydown', (e) => {
-if (e.key === '`' || e.key === '~') { e.preventDefault(); panicNow(); }
-});
-(function() {
-try {
-const saved = localStorage.getItem('bokit_tab_cloak') || 'drive';
-if (TITLES[saved]) document.title = TITLES[saved]; var fav = document.querySelector("link[rel*='icon']"); if (fav && ICONS[saved]) fav.href = ICONS[saved];
-} catch(e) {}
-})();
-</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title id="site-title">Games V7 — Skeletal Flowers Retro Arcade</title>
+  <link id="site-favicon" rel="icon" type="image/svg+xml" href="assets/skull-logo.svg" />
+  <!-- Google Fonts for Retro Glitch & Arcade Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=7.2" />
 </head>
 <body>
-<!-- Top Navigation -->
-<header class="top-nav">
-<div class="nav-brand" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
-<div class="brand-icon">🎮</div>
-<div class="brand-text">
-<h1>BokitWare <span class="brand-badge">237 GAMES</span></h1>
-</div>
-</div>
-<div class="nav-actions">
-<button class="nav-pill nav-pill-proxy" onclick="openProxyBrowser()" title="Launch Web Proxy Browser">🌐 Web Proxy</button>
-<div id="live-clock" class="nav-pill" style="font-variant-numeric: tabular-nums;">--:-- --</div>
-<select id="hub-cloak-select" class="nav-pill nav-select" onchange="setGlobalCloak(this.value)">
-<option value="drive">🎭 Google Drive</option>
-<option value="classroom">🎭 Google Classroom</option>
-<option value="docs">🎭 Google Docs</option>
-<option value="canvas">🎭 Canvas</option>
-<option value="desmos">🎭 Desmos</option>
-<option value="default">🎭 Cloak: Off</option>
-</select>
-<button class="nav-pill nav-pill-panic" onclick="panicNow()" title="Emergency Panic (Hotkey: ~)">🚨 Panic (~)</button>
-</div>
-</header>
-<!-- Hero Header & Filter Bar -->
-<div class="hero">
-<h2 class="hero-title">Web Arcade &amp; Retro Library</h2>
-<p class="hero-desc">Play 237+ classic retro & web games (NES, SNES, N64, DS, PS1) with stealth cloaking & encrypted web proxy</p>
-<div class="search-wrapper">
-<svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2">
-<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-</svg>
-<input type="text" id="search-box" class="search-input" placeholder="Search games by title, series, or category..." autocomplete="off">
-<span class="search-kbd">Ctrl K</span>
-</div>
-<div class="categories-bar" id="category-container">
-<button class="chip active" data-cat="all">🎮 All Games</button>
-<button class="chip chip-proxy" data-cat="proxy">🌐 Web Proxy</button>
-<button class="chip" data-cat="retro">👾 All Retro</button>
-<button class="chip" data-cat="nes">🎮 NES</button>
-<button class="chip" data-cat="snes">🕹️ SNES</button>
-<button class="chip" data-cat="n64">🍄 N64</button>
-<button class="chip" data-cat="ds">📱 DS</button>
-<button class="chip" data-cat="ps1">💿 PS1</button>
-<button class="chip" data-cat="action">⚔️ Action</button>
-<button class="chip" data-cat="arcade">🕹️ Arcade</button>
-<button class="chip" data-cat="sports">⚽ Sports</button>
-<button class="chip" data-cat="puzzle">🧩 Puzzle</button>
-<button class="chip" data-cat="horror">👻 Horror</button>
-<button class="chip" data-cat="driving">🏎️ Driving</button>
-<button class="chip" data-cat="multiplayer">👥 Multiplayer</button>
-<button class="chip" data-cat="flash">⚡ Flash</button>
-</div>
-<div class="counter-pill" id="game-counter">Showing 98 items</div>
-</div>
-<!-- Games Grid -->
-<div class="grid-container">
-<div class="grid" id="game-grid">
-<!-- Special Web Proxy Card -->
-<div class="card" data-title="web proxy browser daydream unblocker google youtube discord search" data-sanitized="web proxy browser" data-category="proxy arcade" data-file="proxy.html" data-folder="proxy" data-slug="proxy" onclick="openProxyBrowser()">
-<div class="card-thumb-wrap" style="background: radial-gradient(circle at 50% 50%, #1e1b4b, #0f172a);">
-<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;">
-<span style="font-size:38px;">🌐</span>
-<span style="font-size:11px;font-weight:800;letter-spacing:1px;color:#a5b4fc;">SCRAMJET &bull; DAYDREAM X</span>
-</div>
-<span class="card-badge cat-purple">🌐 WEB PROXY</span>
-<span class="quick-play-btn">▶</span>
-</div>
-<div class="card-content">
-<div class="card-title">🌐 Bokit Web Proxy</div>
-<div class="card-sub">Browse Google, YouTube, Discord &amp; DuckDuckGo</div>
-<div class="card-actions">
-<button class="card-btn card-btn-primary" onclick="event.stopPropagation();openProxyBrowser();">🌐 Open Proxy</button>
-<button class="card-btn card-btn-secondary" onclick="event.stopPropagation();popoutProxyStealth();" title="Stealth Popout">↗ Popout</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Fullscreen In-App Player Modal -->
-<div id="modal-game-player" class="hidden">
-<div class="player-top-bar">
-<div class="player-bar-left">
-<button class="player-btn-back" id="btn-player-back" onclick="closePlayer()" title="Back to Games (Esc)">
-<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="15 18 9 12 15 6"></polyline></svg>
-<span>Back to Library</span>
-</button>
-<span class="player-live-dot" title="Active"></span>
-<span class="player-game-title" id="player-game-title">Game</span>
-</div>
-<div class="player-bar-right">
-<select id="player-cloak-select" class="player-select" onchange="setGlobalCloak(this.value)">
-<option value="drive">🎭 Google Drive</option>
-<option value="classroom">🎭 Google Classroom</option>
-<option value="docs">🎭 Google Docs</option>
-<option value="canvas">🎭 Canvas</option>
-<option value="desmos">🎭 Desmos</option>
-<option value="default">🎭 Cloak: Off</option>
-</select>
-<button class="player-btn" onclick="reloadGame()" title="Reload (R)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reload</button>
-<button class="player-btn" onclick="popoutCurrentGame()" title="about:blank (B)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Popout</button>
-<button class="player-btn" onclick="togglePlayerFullscreen()" title="Fullscreen (F)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg> Fullscreen</button>
-<button class="player-btn player-btn-panic" onclick="panicNow()" title="Panic (~)">🚨 Panic (~)</button>
-</div>
-</div>
-<div class="player-viewport">
-<div id="player-spinner" class="player-loading-spinner">
-<div class="spinner-ring"></div>
-<span id="player-loading-msg">Launching game in secure container...</span>
-</div>
-<iframe id="player-iframe" src="about:blank" allow="fullscreen; gamepad; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
-</div>
-</div>
-<!-- In-App Web Proxy Browser Modal -->
-<div id="modal-proxy-browser" class="hidden">
-<div class="proxy-top-bar">
-<div class="proxy-bar-left">
-<button class="player-btn-back" onclick="closeProxyBrowser()" title="Back to Games (Esc)">
-<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6"><polyline points="15 18 9 12 15 6"></polyline></svg>
-<span>Library</span>
-</button>
-<div class="proxy-nav-btns">
-<button class="proxy-icon-btn" onclick="proxyGoHome()" title="Home"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></button>
-<button class="proxy-icon-btn" onclick="reloadProxy()" title="Reload (R)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></button>
-</div>
-<div class="proxy-omnibar-wrap">
-<svg class="proxy-lock-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2">
-<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-</svg>
-<input type="text" id="proxy-url-input" class="proxy-omnibar" placeholder="Enter URL or search DuckDuckGo..." autocomplete="off">
-<button class="proxy-go-btn" onclick="handleProxySubmit()" title="Go (Enter)">Go ➔</button>
-</div>
-</div>
-<div class="proxy-bar-right">
-<select id="proxy-engine-select" class="player-select" onchange="switchProxyEngine(this.value)">
-<option value="scramjet">⚡ Scramjet Gateway</option>
-<option value="ddstatic">✨ DayDream X Static</option>
-</select>
-<select id="proxy-cloak-select" class="player-select" onchange="setGlobalCloak(this.value)">
-<option value="drive">🎭 Google Drive</option>
-<option value="classroom">🎭 Google Classroom</option>
-<option value="docs">🎭 Google Docs</option>
-<option value="canvas">🎭 Canvas</option>
-<option value="desmos">🎭 Desmos</option>
-<option value="default">🎭 Cloak: Off</option>
-</select>
-<button class="player-btn" onclick="popoutProxyStealth()" title="about:blank (B)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg> Popout</button>
-<button class="player-btn" onclick="toggleProxyFullscreen()" title="Fullscreen (F)"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg> Fullscreen</button>
-<button class="player-btn player-btn-panic" onclick="panicNow()" title="Panic (~)">🚨 Panic (~)</button>
-</div>
-</div>
-<div class="proxy-viewport">
-<div id="proxy-loading-bar" class="proxy-loading-bar"></div>
-<!-- DayDream X Start Screen -->
-<div id="proxy-start-page" class="proxy-start-page">
-<div class="proxy-start-content">
-<div class="proxy-logo-badge">🌐 BOKIT ENCRYPTED PROXY</div>
-<h1 class="proxy-start-title">Encrypted Web Browser</h1>
-<p class="proxy-start-sub">Unblock web services, bypass DPI firewalls, and browse with zero tracking.</p>
-<div class="proxy-main-search-wrap">
-<svg class="proxy-main-search-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2">
-<circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-</svg>
-<input type="text" id="proxy-main-input" class="proxy-main-search-input" placeholder="Search DuckDuckGo or enter URL (e.g. youtube.com)..." autocomplete="off">
-<button class="proxy-main-search-btn" onclick="submitProxyMain()">Browse</button>
-</div>
-<div class="proxy-presets-label">⚡ POPULAR WEBSITES</div>
-<div class="proxy-presets-grid" id="proxy-presets-grid"></div>
-</div>
-</div>
-<iframe id="proxy-iframe"  src="about:blank" allow="fullscreen; gamepad; autoplay; clipboard-read; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true"></iframe>
-</div>
-</div>
-<script>
-function updateClock() {
-const el = document.getElementById('live-clock');
-if (!el) return;
-const now = new Date();
-let hours = now.getHours();
-const minutes = now.getMinutes().toString().padStart(2, '0');
-const ampm = hours >= 12 ? 'PM' : 'AM';
-hours = hours % 12 || 12;
-el.textContent = `${hours}:${minutes} ${ampm}`;
-}
-setInterval(updateClock, 1000);
-updateClock();
-const GAMES_LIST = [["minus3","-3","","Horror","","cover.png"],["minusB","-B","","Horror","","cover.png"],["10minutestilldawn","10 Minutes Till Dawn","","Action","",""],["Arthur's Nightmare","Arthur's Nightmare","Arthur's Night Adventure","Horror","","cover.png"],["bad time simulator","Bad Time Simulator (Sans Fight)","Sans Rhythm Dodge (Sans Fight)","Action","","cover.png"],["baldis-basics","Baldi's Basics","Math School Challenge","Horror","",""],["basket random","Basket Random","","Sports","",""],["basketballstars","Basketball Stars","","Sports","","cover.png"],["bigshotboxing","Big Shot Boxing","","Sports","","cover.png"],["blockblast","Block Blast","","Action","","cover.png"],["bowmasters","Bowmasters","","Action","",""],["boxingrandom","Boxing Random","","Sports","",""],["burgers and frights","Burgers & Frights","","Horror","","cover.png"],["City Car Driving: Stunt Master","City Car Driving: Stunt Master","","Driving","","cover.png"],["city-car-driving","City Car Driving: Stunt Master","","Driving","","cover.png"],["cluster truck","Clustertruck","Platform Runner 3D","Platformer","",""],["crossy road","Crossy Road","","Action","","cover.png"],["deltarune","Deltarune","","Action","",""],["doki doki literature club","Doki Doki Literature Club!","Poetry Literature Club!","Horror","","cover.png"],["doom","DOOM (1993)","Retro Sci-Fi Maze (1993)","Classics","",""],["doom 2","DOOM II: Hell on Earth","Retro Sci-Fi Maze II: Hell on Earth","Classics","",""],["douchebaglife","Douchebag Life","Beach Lifestyle Sim","Simulation","","cover.png"],["drive-mad","Drive Mad","","Action","",""],["ducklife1","Duck Life","","Duck Life","",""],["ducklife2","Duck Life 2: World Champion","","Duck Life","",""],["ducklife3","Duck Life 3: Evolution","","Duck Life","",""],["ducklife4","Duck Life 4","","Duck Life","",""],["fancypantsadventures","Fancy Pants Adventures: World 1","","Platformer","",""],["fancypantsadventures2","Fancy Pants Adventures: World 2","","Platformer","",""],["fancypantsadventures3","Fancy Pants Adventures: World 3","","Platformer","",""],["fish.","FISH","","Action","","cover.png"],["fnac","Five Nights at Candy's","","Horror","","cover.webp"],["fnac2","Five Nights at Candy's 2","","Horror","","cover.webp"],["fnaf1","Five Nights at Freddy's","Night Shift Security","Horror","",""],["fnaf2","Five Nights at Freddy's 2","Night Shift Security 2","Horror","",""],["fnaf3","Five Nights at Freddy's 3","Night Shift Security 3","Horror","",""],["fnaf4","Five Nights at Freddy's 4","Night Shift Security 4","Horror","",""],["geodash","Geometry Dash","","Platformer","",""],["gladihoppers","Gladihoppers","","Action","",""],["vicecity","Grand Theft Auto: Vice City","","Action","",""],["gunmayham","Gun Mayhem","Mayhem Arena","Action","",""],["handless millionaire","Handless Millionaire","","Casual","","cover.png"],["helltaker","Helltaker","","Action","",""],["hobo1","Hobo","City Brawler","Classics","",""],["hobo2","Hobo 2: Prison Brawl","City Brawler 2: Escapade: Prison Brawl","Classics","",""],["hobo3","Hobo 3: Wanted","City Brawler 3: Wanted: Wanted","Classics","",""],["hobo4","Hobo 4: Total War","City Brawler 4: Tactics: Total War","Classics","",""],["hobo5","Hobo 5: Space Brawls","City Brawler 5: Orbit: Space Brawls","Classics","",""],["hobo6","Hobo 6: HELL","City Brawler 6: Inferno: HELL","Classics","",""],["hobo7","Hobo 7: Heaven","City Brawler 7: Zenith: Heaven","Classics","",""],["houseofhazards","House of Hazards","","Action","","cover.png"],["jetpack joy ride","Jetpack Joyride","","Action","","cover.png"],["minecraft","Minecraft (1.12.2)","","Action","","cover.png"],["Murder","Murder","","Action","","cover.png"],["oneshot","OneShot","","Action","",""],["ovo","OvO","","Platformer","",""],["ovo2","OvO 2","","Platformer","",""],["ovo3","OvO 3 Dimensions","","Platformer","",""],["papasburgeria","Papa's Burgeria","","Papa's Series","",""],["papascheeseria","Papa's Cheeseria","","Papa's Series","",""],["papasdonuteria","Papa's Donuteria","","Papa's Series","",""],["papasfreezeria","Papa's Freezeria","","Papa's Series","",""],["papashotdoggeria","Papa's Hot Doggeria","","Papa's Series","",""],["papaspancakeria","Papa's Pancakeria","","Papa's Series","",""],["papaspastaria","Papa's Pastaria","","Papa's Series","",""],["papaspizzeria","Papa's Pizzeria","","Papa's Series","",""],["papassushiria","Papa's Sushiria","","Papa's Series","",""],["papastacomia","Papa's Taco Mia!","","Papa's Series","",""],["papaswingeria","Papa's Wingeria","","Papa's Series","",""],["retrobowl","Retro Bowl","","","","cover.png"],["retrobowlcollege","Retro Bowl College","","","","cover.png"],["riddleschool1","Riddle School","","Riddle School","","cover.png"],["riddleschool2","Riddle School 2","","Riddle School","","cover.png"],["riddleschool3","Riddle School 3","","Riddle School","","cover.png"],["riddleschool4","Riddle School 4","","Riddle School","","cover.png"],["riddleschool5","Riddle School 5","","Riddle School","","cover.png"],["riddletransfer1","Riddle Transfer","","Riddle School","","cover.png"],["riddletransfer2","Riddle Transfer 2","","Riddle School","","cover.png"],["Slope","Slope","","Action","","cover.png"],["Snow Rider 3D","Snow Rider 3D","","Driving","","cover.png"],["sprunki","Sprunki","","Action","",""],["stickmanhook","Stickman Hook","","Action","",""],["sm64","Super Mario 64","","","","cover.png"],["tag","Tag (2-4 Players)","","Multiplayer","","cover.png"],["tattletail","Tattletail","","Horror","",""],["worldshardestgame1","The World's Hardest Game","","","",""],["worldshardestgame2","The World's Hardest Game 2","","","",""],["worldshardestgame3","The World's Hardest Game 3","","","","cover.png"],["unicycle hero","Unicycle Hero","","Action","","cover.png"],["vex1","Vex","","","","cover.png"],["vex2","Vex 2","","","","cover.png"],["vex3","Vex 3","","","","cover.jpeg"],["vex4","Vex 4","","","","cover.jpeg"],["vex5","Vex 5","","","","cover.jpeg"],["vex6","Vex 6","","","","cover.jpeg"],["vex7","Vex 7","","","","cover.png"],["vex8","Vex 8","","","","cover.png"]];
-const RETRO_DATA = "super-mario-bros|Super Mario Bros.|1985|nes;super-mario-bros-2|Super Mario Bros. 2|1988|nes;super-mario-bros-3|Super Mario Bros. 3|1990|nes;legend-of-zelda|The Legend of Zelda|1986|nes;zelda-2|Zelda II: The Adventure of Link|1987|nes;metroid|Metroid|1986|nes;mega-man-2|Mega Man 2|1988|nes;mega-man-3|Mega Man 3|1990|nes;castlevania|Castlevania|1986|nes;castlevania-3|Castlevania III: Dracula's Curse|1989|nes;punch-out|Mike Tyson's Punch-Out!!|1987|nes;contra|Contra|1988|nes;super-c|Super C|1990|nes;ducktales|DuckTales|1989|nes;kirbys-adventure|Kirby's Adventure|1993|nes;tetris|Tetris|1989|nes;ninja-gaiden|Ninja Gaiden|1988|nes;ninja-gaiden-2|Ninja Gaiden II: The Dark Sword of Chaos|1990|nes;batman|Batman: The Video Game|1989|nes;double-dragon-2|Double Dragon II: The Revenge|1989|nes;bubble-bobble|Bubble Bobble|1986|nes;river-city-ransom|River City Ransom|1989|nes;final-fantasy|Final Fantasy|1987|nes;earthbound-beginnings|EarthBound Beginnings (Mother)|1989|nes;excitebike|Excitebike|1984|nes;super-mario-world|Super Mario World|1990|snes;legend-of-zelda-alttp|The Legend of Zelda: A Link to the Past|1991|snes;super-metroid|Super Metroid|1994|snes;chrono-trigger|Chrono Trigger|1995|snes;super-mario-rpg|Super Mario RPG: Legend of the Seven Stars|1996|snes;donkey-kong-country|Donkey Kong Country|1994|snes;donkey-kong-country-2|Donkey Kong Country 2: Diddy's Kong Quest|1995|snes;donkey-kong-country-3|Donkey Kong Country 3: Dixie Kong's Double Trouble!|1996|snes;super-mario-kart|Super Mario Kart|1992|snes;mega-man-x|Mega Man X|1993|snes;mega-man-x2|Mega Man X2|1994|snes;final-fantasy-3|Final Fantasy III (VI)|1994|snes;earthbound|EarthBound|1994|snes;street-fighter-2-turbo|Street Fighter II Turbo: Hyper Fighting|1993|snes;super-castlevania-4|Super Castlevania IV|1991|snes;secret-of-mana|Secret of Mana|1993|snes;super-mario-all-stars|Super Mario All-Stars|1993|snes;star-fox|Star Fox|1993|snes;f-zero|F-Zero|1990|snes;yoshis-island|Super Mario World 2: Yoshi's Island|1995|snes;tmnt-4-turtles-in-time|Teenage Mutant Ninja Turtles IV: Turtles in Time|1992|snes;super-punch-out|Super Punch-Out!!|1994|snes;kirby-super-star|Kirby Super Star|1996|snes;contra-3|Contra III: The Alien Wars|1992|snes;breath-of-fire-2|Breath of Fire II|1994|snes;super-mario-64|Super Mario 64|1996|n64;legend-of-zelda-oot|The Legend of Zelda: Ocarina of Time|1998|n64;super-smash-bros|Super Smash Bros.|1999|n64;goldeneye-007|GoldenEye 007|1997|n64;mario-kart-64|Mario Kart 64|1996|n64;banjo-kazooie|Banjo-Kazooie|1998|n64;banjo-tooie|Banjo-Tooie|2000|n64;star-fox-64|Star Fox 64|1997|n64;paper-mario|Paper Mario|2000|n64;diddy-kong-racing|Diddy Kong Racing|1997|n64;pokemon-stadium|Pokemon Stadium|1999|n64;pokemon-stadium-2|Pokemon Stadium 2|2000|n64;pokemon-snap|Pokemon Snap|1999|n64;donkey-kong-64|Donkey Kong 64|1999|n64;perfect-dark|Perfect Dark|2000|n64;mario-party|Mario Party|1998|n64;mario-party-2|Mario Party 2|1999|n64;mario-party-3|Mario Party 3|2000|n64;conkers-bad-fur-day|Conker's Bad Fur Day|2001|n64;f-zero-x|F-Zero X|1998|n64;wave-race-64|Wave Race 64|1996|n64;kirby-64|Kirby 64: The Crystal Shards|2000|n64;rayman-2|Rayman 2: The Great Escape|1999|n64;1080-snowboarding|1080 Snowboarding|1998|n64;mario-tennis|Mario Tennis|2000|n64;new-super-mario-bros|New Super Mario Bros.|2006|nds;mario-kart-ds|Mario Kart DS|2005|nds;pokemon-platinum|Pokemon Platinum Version|2009|nds;pokemon-heartgold|Pokemon HeartGold Version|2010|nds;pokemon-soulsilver|Pokemon SoulSilver Version|2010|nds;pokemon-black|Pokemon Black Version|2011|nds;pokemon-white|Pokemon White Version|2011|nds;pokemon-diamond|Pokemon Diamond Version|2007|nds;zelda-phantom-hourglass|The Legend of Zelda: Phantom Hourglass|2007|nds;zelda-spirit-tracks|The Legend of Zelda: Spirit Tracks|2009|nds;chrono-trigger|Chrono Trigger DS|2008|nds;gta-chinatown-wars|Grand Theft Auto: Chinatown Wars|2009|nds;mario-luigi-bowsers-inside-story|Mario & Luigi: Bowser's Inside Story|2009|nds;castlevania-dawn-of-sorrow|Castlevania: Dawn of Sorrow|2005|nds;animal-crossing-wild-world|Animal Crossing: Wild World|2005|nds;super-mario-64-ds|Super Mario 64 DS|2004|nds;kirby-super-star-ultra|Kirby Super Star Ultra|2008|nds;phoenix-wright-justice-for-all|Phoenix Wright: Ace Attorney - Justice for All|2007|nds;professor-layton-curious-village|Professor Layton and the Curious Village|2008|nds;mario-party-ds|Mario Party DS|2007|nds;dragon-quest-9|Dragon Quest IX: Sentinels of the Starry Skies|2010|nds;the-world-ends-with-you|The World Ends With You|2008|nds;radiant-historia|Radiant Historia|2011|nds;elite-beat-agents|Elite Beat Agents|2006|nds;sonic-colors|Sonic Colors|2010|nds;crash-bandicoot|Crash Bandicoot|1997|psx;crash-bandicoot-2|Crash Bandicoot 2: Cortex Strikes Back|1997|psx;crash-bandicoot-3|Crash Bandicoot: Warped|1997|psx;crash-team-racing|CTR: Crash Team Racing|1997|psx;crash-bash|Crash Bash|1997|psx;spyro-the-dragon|Spyro the Dragon|1997|psx;spyro-2-riptos-rage|Spyro 2: Ripto's Rage!|1997|psx;tekken-3|Tekken 3|1997|psx;castlevania-sotn|Castlevania: Symphony of the Night|1997|psx;silent-hill|Silent Hill|1997|psx;tony-hawks-pro-skater-2|Tony Hawk's Pro Skater 2|1997|psx;metal-slug-x|Metal Slug X|1997|psx;mega-man-x4|Mega Man X4|1997|psx;rayman|Rayman|1997|psx;parappa-the-rapper|PaRappa the Rapper|1997|psx;pepsiman|Pepsiman|1997|psx;marvel-vs-capcom|Marvel vs. Capcom: Clash of Super Heroes|1997|psx;spider-man|Spider-Man|1997|psx;resident-evil-3|Resident Evil 3: Nemesis|1997|psx;medal-of-honor|Medal of Honor|1997|psx;gran-turismo-2|Gran Turismo 2|1997|psx;spyro-year-of-the-dragon|Spyro: Year of the Dragon|1997|psx;resident-evil|Resident Evil (Director's Cut)|1997|psx;tomb-raider|Tomb Raider|1997|psx;tomb-raider-2|Tomb Raider II: Starring Lara Croft|1997|psx;dino-crisis|Dino Crisis|1997|psx;driver|Driver: You Are The Wheelman|1997|psx;syphon-filter|Syphon Filter|1997|psx;wipeout|WipEout|1997|psx;tony-hawks-pro-skater|Tony Hawk's Pro Skater|1997|psx;final-fantasy-tactics|Final Fantasy Tactics|1997|psx;grand-theft-auto|Grand Theft Auto|1997|psx;grand-theft-auto-2|Grand Theft Auto 2|1997|psx;doom|Doom|1997|psx;need-for-speed-3-hot-pursuit|Need for Speed III: Hot Pursuit|1997|psx;tekken-2|Tekken 2|1997|psx;spider-man-2-enter-electro|Spider-Man 2: Enter Electro|1997|psx;mortal-kombat-trilogy|Mortal Kombat Trilogy|1997|psx;rayman-2-the-great-escape|Rayman 2: The Great Escape|1997|psx;bloody-roar-2|Bloody Roar II|1997|psx";
-const CORE_SYS_NAMES = { nes: 'NES', snes: 'SNES', n64: 'N64', nds: 'DS', psx: 'PS1' };
-RETRO_DATA.split(';').forEach(entry => {
-if (!entry) return;
-const p = entry.split('|');
-const slug = p[0];
-const title = p[1];
-const yr = p[2] ? (p[2] + ' ') : '';
-const core = p[3];
-const pfx = core === 'psx' ? 'ps1-' : (core === 'nds' ? 'nds-' : (core + '-'));
-const id = pfx + slug;
-const sys = CORE_SYS_NAMES[core] || core.toUpperCase();
-GAMES_LIST.push([id, title, yr + sys + ' Classic', 'Retro ' + sys, id + '.html', 'cover.png']);
-});
-const CAT_COLORS = {
-'action': 'cat-rose',
-'sports': 'cat-emerald',
-'horror': 'cat-purple',
-'puzzle': 'cat-cyan',
-'driving': 'cat-amber',
-'flash': 'cat-yellow',
-'classics': 'cat-amber',
-'nes': 'cat-rose',
-'snes': 'cat-purple',
-'n64': 'cat-emerald',
-'ds': 'cat-cyan',
-'ps1': 'cat-indigo',
-'retro': 'cat-amber',
-'multiplayer': 'cat-sky',
-'papas': 'cat-orange',
-'riddle school': 'cat-green',
-'arcade': 'cat-indigo'
-};
-function slugifyStr(str) {
-return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-}
-function buildCards() {
-const grid = document.getElementById('game-grid');
-if (!grid) return;
-const frag = document.createDocumentFragment();
-for (let i = 0; i < GAMES_LIST.length; i++) {
-const item = GAMES_LIST[i];
-const folder = item[0];
-const title = item[1];
-const stitle = item[2] || title;
-const cat = item[3] || 'Arcade';
-const fname = item[4] || (slugifyStr(folder) + '.html');
-const cand = item[5] || 'cover.jpg';
-const catLower = cat.toLowerCase();
-let catClass = 'cat-indigo';
-for (const k in CAT_COLORS) {
-if (catLower.includes(k)) { catClass = CAT_COLORS[k]; break; }
-}
-const slug = fname.replace(/\.html$/i, '');
-const card = document.createElement('div');
-card.className = 'card';
-card.setAttribute('data-title', title.toLowerCase());
-if (stitle.toLowerCase() !== title.toLowerCase()) card.setAttribute('data-sanitized', stitle.toLowerCase());
-card.setAttribute('data-category', catLower);
-card.setAttribute('data-file', fname);
-card.setAttribute('data-folder', folder);
-card.setAttribute('data-slug', slug);
-const encFolder = encodeURIComponent(folder);
-const encCand = encodeURIComponent(cand);
-card.innerHTML =
-'<div class="card-thumb-wrap">' +
-'<img class="card-thumb" src="games/' + encFolder + '/' + encCand + '" data-slug="' + slug + '" data-folder="' + folder + '" data-cand="' + cand + '" alt="" loading="lazy" onerror="imgErr(this);">' +
-'<span class="card-badge ' + catClass + '">' + cat + '</span>' +
-'<span class="quick-play-btn">▶</span>' +
-'</div>' +
-'<div class="card-content">' +
-'<div class="card-title">' + title + '</div>' +
-'<div class="card-sub">' + stitle + '</div>' +
-'<div class="card-actions">' +
-'<button class="card-btn card-btn-primary">▶ Play</button>' +
-'<button class="card-btn card-btn-secondary btn-pop" title="Popout">↗ Popout</button>' +
-'</div>' +
-'</div>';
-frag.appendChild(card);
-}
-grid.appendChild(frag);
-}
-buildCards();
-function imgErr(img) {
-const folder = img.getAttribute('data-folder');
-const slug = img.getAttribute('data-slug');
-if (!img.__errCount) img.__errCount = 0;
-img.__errCount++;
-if (img.__errCount === 1) {
-img.src = 'games/' + encodeURIComponent(folder) + '/cover.png';
-} else if (img.__errCount === 2) {
-img.src = 'https://pop-leave.tailcb4af7.ts.net/games/' + encodeURIComponent(folder) + '/cover.jpg';
-} else {
-img.onerror = null;
-img.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 125' fill='%230f1420'%3E%3Crect width='200' height='125'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%236366f1' font-size='26'%3E🎮%3C/text%3E%3C/svg%3E";
-}
-}
-const searchInput = document.getElementById('search-box');
-const cards = document.querySelectorAll('.card');
-const counter = document.getElementById('game-counter');
-const chips = document.querySelectorAll('.chip');
-const cloakSel = document.getElementById('hub-cloak-select');
-try {
-const saved = localStorage.getItem('bokit_tab_cloak') || 'drive';
-if (cloakSel && TITLES[saved]) { cloakSel.value = saved; setGlobalCloak(saved); }
-} catch(e) {}
-let currentCategory = 'all';
-let filterPending = null;
-function applyFilter() {
-const query = (searchInput.value || '').toLowerCase().trim();
-let visible = 0;
-cards.forEach(card => {
-const title = card.getAttribute('data-title') || '';
-const sanitized = card.getAttribute('data-sanitized') || '';
-const cat = card.getAttribute('data-category') || '';
-const catTokens = cat.toLowerCase().split(/[\s,]+/);
-const matchesQuery = !query || title.includes(query) || sanitized.includes(query) || cat.includes(query);
-let matchesCategory = false;
-if (currentCategory === 'all') {
-matchesCategory = true;
-} else if (currentCategory === 'retro') {
-matchesCategory = catTokens.includes('retro');
-} else if (currentCategory === 'nes') {
-matchesCategory = catTokens.includes('nes');
-} else if (currentCategory === 'snes') {
-matchesCategory = catTokens.includes('snes');
-} else if (currentCategory === 'n64') {
-matchesCategory = catTokens.includes('n64');
-} else if (currentCategory === 'ds' || currentCategory === 'nds') {
-matchesCategory = catTokens.includes('ds') || catTokens.includes('nds');
-} else if (currentCategory === 'ps1' || currentCategory === 'psx') {
-matchesCategory = catTokens.includes('ps1') || catTokens.includes('psx');
-} else {
-matchesCategory = cat.includes(currentCategory);
-}
-if (matchesQuery && matchesCategory) {
-card.style.display = 'flex';
-visible++;
-} else {
-card.style.display = 'none';
-}
-});
-if (counter) counter.textContent = `Showing ${visible} items`;
-}
-function queueFilter() {
-if (filterPending) cancelAnimationFrame(filterPending);
-filterPending = requestAnimationFrame(applyFilter);
-}
-searchInput.addEventListener('input', queueFilter);
-chips.forEach(chip => {
-chip.addEventListener('click', () => {
-chips.forEach(c => c.classList.remove('active'));
-chip.classList.add('active');
-currentCategory = chip.getAttribute('data-cat');
-queueFilter();
-});
-});
-const gridEl = document.getElementById('game-grid');
-if (gridEl) {
-gridEl.addEventListener('click', function(e) {
-const card = e.target.closest('.card');
-if (!card) return;
-const file = card.getAttribute('data-file');
-const folder = card.getAttribute('data-folder') || '';
-if (file === 'proxy.html') {
-openProxyBrowser();
-return;
-}
-if (!file) return;
-if (e.target.closest('.btn-pop') || e.target.closest('.card-btn-secondary')) {
-e.stopPropagation();
-openStealth(file, folder);
-} else {
-launchGame(file, folder);
-}
-});
-}
-let currentGameFilename = '';
-let currentGameFolder = '';
-let currentGameTitle = '';
-function launchGame(filename, folder) {
-try {
-window.open('https://uplcm.com/4/11930399', '_blank', 'noopener,noreferrer');
-} catch(e) {}
-const modal = document.getElementById('modal-game-player');
-const iframe = document.getElementById('player-iframe');
-const spinner = document.getElementById('player-spinner');
-const titleEl = document.getElementById('player-game-title');
-const msgEl = document.getElementById('player-loading-msg');
-const cloakDropdown = document.getElementById('player-cloak-select');
-if (!modal || !iframe) return;
-if (!folder) {
-const card = document.querySelector(`.card[data-file="${filename}"]`);
-if (card) folder = card.getAttribute('data-folder') || '';
-}
-let title = '';
-const btn = document.querySelector(`.card-btn-primary[data-file="${filename}"]`);
-if (btn) {
-const card = btn.closest('.card');
-if (card) {
-const tEl = card.querySelector('.card-title');
-if (tEl) title = tEl.textContent.trim();
-}
-}
-if (!title) title = filename.replace(/\.html$/i, '').replace(/[-_]/g, ' ').toUpperCase();
-currentGameFilename = filename;
-currentGameFolder = folder;
-currentGameTitle = title;
-if (titleEl) titleEl.textContent = title;
-if (msgEl) msgEl.textContent = 'Launching ' + title + '...';
-if (spinner) { spinner.classList.remove('hidden'); spinner.style.display = 'flex'; }
-try {
-const curCloak = localStorage.getItem('bokit_tab_cloak') || 'drive';
-if (cloakDropdown) cloakDropdown.value = curCloak;
-} catch(e) {}
-modal.classList.remove('hidden');
-const slug = filename.replace(/\.html$/i, '');
-try {
-const curPath = window.location.pathname.split('/').pop() || 'index.svg';
-history.replaceState(null, '', curPath + '#play=' + encodeURIComponent(slug));
-} catch(e) {}
-const base = document.baseURI || window.location.href;
-const candidates = [];
-if (folder) {
-candidates.push(new URL('games/' + encodeURIComponent(folder) + '/index.html', base).href);
-candidates.push(new URL('content/' + encodeURIComponent(folder) + '/index.html', base).href);
-}
-candidates.push(new URL(filename, base).href);
-if (folder) {
-candidates.push('https://pop-leave.tailcb4af7.ts.net/games/' + encodeURIComponent(folder) + '/index.html');
-}
-async function tryLoadGame() {
-for (const targetUrl of candidates) {
-try {
-const controller = new AbortController();
-const timeout = setTimeout(() => controller.abort(), 2000);
-const r = await fetch(targetUrl, { signal: controller.signal });
-clearTimeout(timeout);
-if (r.ok) {
-const html = await r.text();
-const baseTag = '<base href="' + new URL('./', targetUrl).href + '">';
-let fullHtml = html;
-if (fullHtml.includes('<head>')) fullHtml = fullHtml.replace('<head>', '<head>' + baseTag);
-else if (fullHtml.includes('<html>')) fullHtml = fullHtml.replace('<html>', '<html><head>' + baseTag + '</head>');
-else fullHtml = baseTag + fullHtml;
-const blob = new Blob([fullHtml], { type: 'text/html' });
-iframe.src = URL.createObjectURL(blob);
-return;
-}
-} catch(err) {}
-}
-if (folder) {
-iframe.src = 'https://pop-leave.tailcb4af7.ts.net/games/' + encodeURIComponent(folder) + '/index.html';
-} else {
-iframe.src = new URL(filename, base).href;
-}
-}
-tryLoadGame();
-iframe.onload = function() {
-if (spinner) {
-spinner.classList.add('hidden');
-setTimeout(() => { spinner.style.display = 'none'; }, 200);
-}
-try {
-iframe.focus();
-if (iframe.contentWindow) iframe.contentWindow.focus();
-} catch(e) {}
-};
-}
-function closePlayer() {
-const modal = document.getElementById('modal-game-player');
-const iframe = document.getElementById('player-iframe');
-if (modal) modal.classList.add('hidden');
-if (iframe) iframe.src = 'about:blank';
-currentGameFilename = '';
-currentGameFolder = '';
-currentGameTitle = '';
-try {
-const curPath = window.location.pathname.split('/').pop() || 'index.svg';
-history.replaceState(null, '', curPath);
-} catch(e) {}
-}
-function reloadGame() {
-if (currentGameFilename) launchGame(currentGameFilename, currentGameFolder);
-}
-function togglePlayerFullscreen() {
-const modal = document.getElementById('modal-game-player');
-if (!document.fullscreenElement) (modal || document.documentElement).requestFullscreen().catch(() => {});
-else if (document.exitFullscreen) document.exitFullscreen();
-}
-function popoutCurrentGame() {
-if (currentGameFilename) openStealth(currentGameFilename, currentGameFolder);
-}
-/* Web Proxy Controller Logic */
-let currentProxyUrl = '';
-let currentProxyEngine = 'scramjet';
-function openProxyBrowser(targetUrl) {
-try {
-window.open('https://uplcm.com/4/11930399', '_blank', 'noopener,noreferrer');
-} catch(e) {}
-const modal = document.getElementById('modal-proxy-browser');
-const startPage = document.getElementById('proxy-start-page');
-const iframe = document.getElementById('proxy-iframe');
-const omnibar = document.getElementById('proxy-url-input');
-const mainInput = document.getElementById('proxy-main-input');
-if (!modal) return;
-modal.classList.remove('hidden');
-try {
-const curPath = window.location.pathname.split('/').pop() || 'index.svg';
-history.replaceState(null, '', curPath + '#proxy');
-} catch(e) {}
-if (targetUrl) {
-navigateToProxy(targetUrl);
-} else if (!currentProxyUrl) {
-proxyGoHome();
-if (mainInput) setTimeout(() => mainInput.focus(), 150);
-} else {
-if (startPage) startPage.classList.add('hidden');
-if (iframe) iframe.style.display = 'block';
-if (omnibar) omnibar.value = currentProxyUrl;
-}
-}
-function closeProxyBrowser() {
-const modal = document.getElementById('modal-proxy-browser');
-if (modal) modal.classList.add('hidden');
-try {
-const curPath = window.location.pathname.split('/').pop() || 'index.svg';
-history.replaceState(null, '', curPath);
-} catch(e) {}
-}
-function proxyGoHome() {
-const startPage = document.getElementById('proxy-start-page');
-const iframe = document.getElementById('proxy-iframe');
-const omnibar = document.getElementById('proxy-url-input');
-const loading = document.getElementById('proxy-loading-bar');
-if (startPage) startPage.classList.remove('hidden');
-if (iframe) { iframe.style.display = 'none'; iframe.src = 'about:blank'; }
-if (omnibar) omnibar.value = '';
-if (loading) loading.style.display = 'none';
-currentProxyUrl = '';
-}
-function getProxyGateway(targetUrl) {
-if (currentProxyEngine === 'ddstatic' || targetUrl === 'daydream') {
-const base = document.baseURI || window.location.href;
-return new URL('dd/index.svg', base).href;
-}
-const host = (window.location.hostname === 'pop-leave.tailcb4af7.ts.net' || window.location.hostname === 'localhost')
-? ''
-: 'https://pop-leave.tailcb4af7.ts.net';
-return host + '/browser/gateway?url=' + encodeURIComponent(targetUrl);
-}
-function navigateToProxy(input) {
-try {
-window.open('https://uplcm.com/4/11930399', '_blank', 'noopener,noreferrer');
-} catch(e) {}
-if (!input) return;
-input = input.trim();
-let finalUrl = input;
-if (input === 'dd:' || input === 'daydream' || input === 'dd') {
-launchDaydreamStatic();
-return;
-}
-if (!input.includes('.') || input.includes(' ') || input.startsWith('?')) {
-const query = input.replace(/^\?/, '').trim();
-finalUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
-} else if (!/^https?:\/\//i.test(input)) {
-finalUrl = 'https://' + input;
-}
-currentProxyUrl = finalUrl;
-const omnibar = document.getElementById('proxy-url-input');
-const startPage = document.getElementById('proxy-start-page');
-const iframe = document.getElementById('proxy-iframe');
-const loading = document.getElementById('proxy-loading-bar');
-if (omnibar) omnibar.value = finalUrl;
-if (startPage) startPage.classList.add('hidden');
-if (iframe) {
-iframe.style.display = 'block';
-if (loading) loading.style.display = 'block';
-iframe.src = getProxyGateway(finalUrl);
-}
-}
-function handleProxySubmit() {
-const omnibar = document.getElementById('proxy-url-input');
-if (omnibar && omnibar.value) navigateToProxy(omnibar.value);
-}
-function submitProxyMain() {
-const mainInput = document.getElementById('proxy-main-input');
-if (mainInput && mainInput.value) navigateToProxy(mainInput.value);
-}
-function launchDaydreamStatic() {
-currentProxyEngine = 'ddstatic';
-const engSel = document.getElementById('proxy-engine-select');
-if (engSel) engSel.value = 'ddstatic';
-const base = document.baseURI || window.location.href;
-const ddUrl = new URL('dd/index.svg', base).href;
-currentProxyUrl = ddUrl;
-const omnibar = document.getElementById('proxy-url-input');
-const startPage = document.getElementById('proxy-start-page');
-const iframe = document.getElementById('proxy-iframe');
-const loading = document.getElementById('proxy-loading-bar');
-if (omnibar) omnibar.value = 'daydream://static';
-if (startPage) startPage.classList.add('hidden');
-if (iframe) {
-iframe.style.display = 'block';
-if (loading) loading.style.display = 'block';
-iframe.src = ddUrl;
-}
-}
-function switchProxyEngine(val) {
-currentProxyEngine = val;
-if (val === 'ddstatic') {
-launchDaydreamStatic();
-} else if (currentProxyUrl && !currentProxyUrl.includes('dd/index.svg')) {
-navigateToProxy(currentProxyUrl);
-} else {
-proxyGoHome();
-}
-}
-function reloadProxy() {
-const iframe = document.getElementById('proxy-iframe');
-const loading = document.getElementById('proxy-loading-bar');
-if (iframe && iframe.style.display !== 'none') {
-if (loading) loading.style.display = 'block';
-try { iframe.contentWindow.location.reload(); }
-catch(e) { iframe.src = iframe.src; }
-}
-}
-function toggleProxyFullscreen() {
-const modal = document.getElementById('modal-proxy-browser');
-if (!document.fullscreenElement) (modal || document.documentElement).requestFullscreen().catch(() => {});
-else if (document.exitFullscreen) document.exitFullscreen();
-}
-function popoutProxyStealth() {
-const win = window.open('about:blank', '_blank');
-if (!win) { alert('Popup blocked.'); return; }
-const curKey = localStorage.getItem('bokit_tab_cloak') || 'drive';
-const curTitle = TITLES[curKey] || TITLES.drive;
-const curIcon = ICONS[curKey] || ICONS.drive;
-const target = currentProxyUrl ? getProxyGateway(currentProxyUrl) : (new URL('proxy.html', document.baseURI || window.location.href).href);
-const html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' + curTitle + '</title><link rel="icon" type="image/svg+xml" href="' + curIcon + '"><style>body,html{margin:0;padding:0;width:100%;height:100%;overflow:hidden;background:#06080e;}iframe{width:100%;height:100%;border:none;display:block;}</style></head><body><iframe src="' + target + '" allow="fullscreen; gamepad; autoplay; clipboard-read; clipboard-write; encrypted-media"></iframe></body></html>';
-win.document.open();
-win.document.write(html);
-win.document.close();
-}
-const proxyFrame = document.getElementById('proxy-iframe');
-if (proxyFrame) {
-proxyFrame.onload = function() {
-const loading = document.getElementById('proxy-loading-bar');
-if (loading) loading.style.display = 'none';
-try {
-proxyFrame.focus();
-if (proxyFrame.contentWindow) proxyFrame.contentWindow.focus();
-} catch(e) {}
-};
-}
-window.addEventListener('message', function(e) {
-if (e.data && e.data.type === 'scramjet_navigated' && e.data.url) {
-currentProxyUrl = e.data.url;
-const omnibar = document.getElementById('proxy-url-input');
-if (omnibar) omnibar.value = e.data.url;
-}
-});
-const omnibarInput = document.getElementById('proxy-url-input');
-if (omnibarInput) {
-omnibarInput.addEventListener('keydown', (e) => {
-if (e.key === 'Enter') handleProxySubmit();
-});
-}
-const mainProxyInput = document.getElementById('proxy-main-input');
-if (mainProxyInput) {
-mainProxyInput.addEventListener('keydown', (e) => {
-if (e.key === 'Enter') submitProxyMain();
-});
-}
-function checkHashAutoLaunch() {
-let hash = window.location.hash || '';
-let search = window.location.search || '';
-if (!hash && window.__PARENT_SVG_HASH__) hash = window.__PARENT_SVG_HASH__;
-if (!search && window.__PARENT_SVG_SEARCH__) search = window.__PARENT_SVG_SEARCH__;
-if (hash.includes('#proxy') || hash.includes('#browser')) {
-openProxyBrowser();
-return;
-}
-let targetSlug = '';
-const m = /#(?:play=|game=)?([a-zA-Z0-9_-]+)/i.exec(hash);
-if (m && m[1]) targetSlug = m[1];
-else {
-try {
-const p = new URLSearchParams(search);
-if (p.get('game')) targetSlug = p.get('game');
-} catch(e) {}
-}
-if (targetSlug && targetSlug !== 'top' && targetSlug !== '') {
-const fname = targetSlug.endsWith('.html') ? targetSlug : targetSlug + '.html';
-const card = document.querySelector(`.card[data-file="${fname}"]`);
-const folder = card ? (card.getAttribute('data-folder') || '') : '';
-launchGame(fname, folder);
-}
-}
-window.addEventListener('keydown', function(e) {
-if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-e.preventDefault();
-if (searchInput) { searchInput.focus(); searchInput.select(); }
-} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'l') {
-const proxyModal = document.getElementById('modal-proxy-browser');
-if (proxyModal && !proxyModal.classList.contains('hidden')) {
-e.preventDefault();
-if (omnibarInput) { omnibarInput.focus(); omnibarInput.select(); }
-}
-} else if (e.key === '/' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-e.preventDefault();
-if (searchInput) { searchInput.focus(); searchInput.select(); }
-} else if (e.key === 'Escape') {
-const pModal = document.getElementById('modal-proxy-browser');
-const gModal = document.getElementById('modal-game-player');
-if (pModal && !pModal.classList.contains('hidden')) {
-e.preventDefault();
-closeProxyBrowser();
-} else if (gModal && !gModal.classList.contains('hidden')) {
-e.preventDefault();
-closePlayer();
-} else if (searchInput && document.activeElement === searchInput) {
-searchInput.value = '';
-queueFilter();
-searchInput.blur();
-}
-} else if ((e.key === 'r' || e.key === 'R') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-const pModal = document.getElementById('modal-proxy-browser');
-const gModal = document.getElementById('modal-game-player');
-if (pModal && !pModal.classList.contains('hidden')) { e.preventDefault(); reloadProxy(); }
-else if (gModal && !gModal.classList.contains('hidden')) { e.preventDefault(); reloadGame(); }
-} else if ((e.key === 'b' || e.key === 'B') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-const pModal = document.getElementById('modal-proxy-browser');
-const gModal = document.getElementById('modal-game-player');
-if (pModal && !pModal.classList.contains('hidden')) { e.preventDefault(); popoutProxyStealth(); }
-else if (gModal && !gModal.classList.contains('hidden')) { e.preventDefault(); popoutCurrentGame(); }
-} else if ((e.key === 'f' || e.key === 'F') && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-const pModal = document.getElementById('modal-proxy-browser');
-const gModal = document.getElementById('modal-game-player');
-if (pModal && !pModal.classList.contains('hidden')) { e.preventDefault(); toggleProxyFullscreen(); }
-else if (gModal && !gModal.classList.contains('hidden')) { e.preventDefault(); togglePlayerFullscreen(); }
-}
-});
-const PROXY_PRESETS = [
-['🌐','Google','Search','https://google.com'],
-['▶️','YouTube','Videos','https://youtube.com'],
-['💬','Discord','Chat','https://discord.com'],
-['🎵','TikTok','Shorts','https://tiktok.com'],
-['🎮','Poki','Web games','https://poki.com'],
-['🕹️','CrazyGames','Online games','https://crazygames.com'],
-['♟️','Chess.com','Board games','https://chess.com'],
-['📚','Wikipedia','Encyclopedia','https://wikipedia.org'],
-['🐙','GitHub','Code','https://github.com'],
-['🎬','AllFlix','HD stream','https://allflix.org'],
-['✨','DayDream X','ServiceWorker','daydream']
-];
-function renderProxyPresets() {
-const g = document.getElementById('proxy-presets-grid');
-if (!g) return;
-g.innerHTML = PROXY_PRESETS.map(p =>
-'<div class="proxy-preset-card" onclick="' + (p[3] === 'daydream' ? 'launchDaydreamStatic()' : ('navigateToProxy(\"' + p[3] + '\")')) + '">' +
-'<span class="preset-icon">' + p[0] + '</span>' +
-'<span class="preset-name">' + p[1] + '</span>' +
-'<span class="preset-desc">' + p[2] + '</span>' +
-'</div>'
-).join('');
-}
-renderProxyPresets();
-window.addEventListener('DOMContentLoaded', checkHashAutoLaunch);
-window.addEventListener('hashchange', checkHashAutoLaunch);
-</script>
+  <!-- CRT Scanlines Overlay -->
+  <div id="crt-overlay" class="crt-overlay"></div>
+
+  <!-- Top Retro Navigation Bar -->
+  <header id="top-nav">
+    <div class="nav-brand" onclick="switchTab('home')">
+      <img src="assets/skull-logo.svg" class="brand-flower-icon" alt="Games V7 Logo" />
+      <div class="brand-label">
+        <span class="brand-title">GAMES V7</span>
+        <span class="brand-sub">SKELETAL FLOWERS</span>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="nav-tabs">
+        <li><button class="nav-tab-btn active" data-tab="home" onclick="switchTab('home')">HOME</button></li>
+        <li><button class="nav-tab-btn" data-tab="games" onclick="switchTab('games')">GAMES</button></li>
+        <li><button class="nav-tab-btn" data-tab="proxy" onclick="switchTab('proxy')">PROXY</button></li>
+        <li><button class="nav-tab-btn" data-tab="editor" onclick="switchTab('editor')">CODE EDITOR</button></li>
+        <li><button class="nav-tab-btn" data-tab="settings" onclick="switchTab('settings')">SETTINGS</button></li>
+      </ul>
+    </nav>
+
+    <div class="nav-right">
+      <button class="nav-pill-btn nav-pill-panic" onclick="triggerPanic()" title="Panic Button (Hotkey: ~)">
+        <span>🚨 PANIC (~)</span>
+      </button>
+      <button class="nav-pill-btn" onclick="openAboutBlankCloak()" title="Open entire portal in about:blank">
+        <span>🎭 STEALTH</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ====================================================================
+         1. HOME TAB — SKELETAL FLOWERS RETRO SHOWCASE
+         Exact Composition Matching Reference Screenshot
+         ==================================================================== -->
+    <section id="home-view" class="tab-view active">
+      <div class="hero-showcase-container">
+        
+        <!-- Retro Main Stage: Solid Dark Background with 3D Flower & Overlay Window -->
+        <div class="hero-stage-layout">
+          
+          <!-- Left Column: Eyebrow, 3D Glitch Title, Classic Retro OS Window, Collections -->
+          <div class="hero-info-column">
+            <span class="hero-eyebrow">// DIGITAL VAULT 2026</span>
+            
+            <!-- Exact CRT Chromatic Aberration Text (Red + Cyan + White) -->
+            <div class="crt-title-container">
+              <div class="crt-sf red">SKELETAL FLOWERS</div>
+              <div class="crt-sf blue">SKELETAL FLOWERS</div>
+              <h1 class="crt-sf main">SKELETAL FLOWERS</h1>
+            </div>
+
+            <!-- Classic Retro OS Window (Matches User Screenshot) -->
+            <div class="retro-browser-window">
+              <div class="retro-browser-bar">
+                <img src="assets/close-button.svg" alt="Window controls" class="retro-controls-img" />
+              </div>
+              <div class="retro-window-body">
+                <p>
+                  <strong>220+ digitally preserved retro & modern games</strong> with unblocked stealth proxy and live in-browser development environment. Pure performance, zero latency, inspired by the essence of arcade gaming.
+                </p>
+              </div>
+            </div>
+
+            <!-- Collections Button with Chromatic Aberration Arrow -->
+            <div>
+              <button class="retro-btn-collections" onclick="switchTab('games')" title="Browse All 220+ Games">
+                <span>COLLECTIONS</span>
+                <img src="assets/arrow_svg.svg" alt="Arrow" class="retro-arrow-icon" />
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: 3D Blooming Skull Flower Artwork -->
+          <div class="hero-art-display">
+            <img src="assets/hero-skull-flower.jpg" alt="Skeletal Flowers Artwork" class="hero-flower-img" />
+          </div>
+
+        </div>
+
+        <!-- Live Stats Overview -->
+        <div class="stats-strip">
+          <div class="stat-card" onclick="switchTab('games')">
+            <div class="stat-icon">🎮</div>
+            <div class="stat-info">
+              <span class="stat-num" id="stat-games-count">220+</span>
+              <span class="stat-label">Playable Games</span>
+            </div>
+          </div>
+
+          <div class="stat-card" onclick="switchTab('games')">
+            <div class="stat-icon">🕹️</div>
+            <div class="stat-info">
+              <span class="stat-num">5 CORES</span>
+              <span class="stat-label">NES • SNES • N64 • DS • PS1</span>
+            </div>
+          </div>
+
+          <div class="stat-card" onclick="switchTab('proxy')">
+            <div class="stat-icon">🌐</div>
+            <div class="stat-info">
+              <span class="stat-num">STEALTH</span>
+              <span class="stat-label">Unblocked Web Proxy</span>
+            </div>
+          </div>
+
+          <div class="stat-card" onclick="switchTab('editor')">
+            <div class="stat-icon">💻</div>
+            <div class="stat-info">
+              <span class="stat-num">SANDBOX</span>
+              <span class="stat-label">Live Code IDE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2. GAMES TAB — ARCADE & RETRO CATALOG
+         ==================================================================== -->
+    <section id="games-view" class="tab-view">
+      <div class="games-toolbar">
+        <div class="search-omnibar-wrap">
+          <span class="search-icon-left">🔍</span>
+          <input type="text" id="games-search-input" class="search-input-field" placeholder="Search 220+ games, systems, retro titles..." autocomplete="off" />
+          <button id="btn-clear-search" class="btn-clear-search" style="display: none;" onclick="clearGamesSearch()">&times;</button>
+        </div>
+
+        <div class="system-filter-chips" id="system-filter-chips">
+          <button class="filter-chip active" data-filter="all">ALL (270+)</button>
+          <button class="filter-chip" data-filter="gb">GAME BOY (25)</button>
+          <button class="filter-chip" data-filter="atari">ATARI 2600 (25)</button>
+          <button class="filter-chip" data-filter="nes">NES (25)</button>
+          <button class="filter-chip" data-filter="snes">SNES (25)</button>
+          <button class="filter-chip" data-filter="n64">N64 (25)</button>
+          <button class="filter-chip" data-filter="nds">NINTENDO DS (25)</button>
+          <button class="filter-chip" data-filter="ps1">PLAYSTATION 1 (40)</button>
+          <button class="filter-chip" data-filter="html5">HTML5 WEB</button>
+          <button class="filter-chip" data-filter="flash">FLASH CLASSICS</button>
+        </div>
+      </div>
+
+      <!-- Games Grid -->
+      <div class="games-grid" id="games-grid">
+        <!-- Injected dynamically via app.js -->
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3. PROXY TAB — STEALTH WEB BROWSER
+         ==================================================================== -->
+    <section id="proxy-view" class="tab-view">
+      <div class="proxy-omnibar-box">
+        <span style="color:#10b981;font-size:16px;">🔒</span>
+        <input type="text" id="proxy-url-input" class="proxy-input" placeholder="Enter URL or search term (e.g. google.com, youtube.com)..." />
+        <button class="btn-proxy-go" onclick="launchProxyUrl()">ENTER ▶</button>
+        <button type="button" class="btn-proxy-ctrl" id="btn-ping-wisp" onclick="openWispPingModal()" title="Ping Wisp Servers (Latency Test)">⚡ PING WISP</button>
+        <button type="button" class="btn-proxy-ctrl" id="btn-proxy-fullscreen" onclick="toggleProxyFullscreen()" title="Toggle Fullscreen (F)">⛶ FULLSCREEN</button>
+        <div class="wisp-status-badge" id="wisp-status-pill" onclick="openWispPingModal()" title="Click to test &amp; configure Wisp server latency">
+          <span class="wisp-indicator-dot online"></span>
+          <span class="wisp-label">Wisp:</span>
+          <span class="wisp-ms" id="wisp-ping-val">--ms</span>
+        </div>
+      </div>
+
+      <div class="proxy-bookmarks-grid">
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://google.com')">
+          <span class="bookmark-icon">🌐</span>
+          <span class="bookmark-name">Google</span>
+          <span class="bookmark-desc">Search</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://youtube.com')">
+          <span class="bookmark-icon">▶️</span>
+          <span class="bookmark-name">YouTube</span>
+          <span class="bookmark-desc">Videos</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://discord.com')">
+          <span class="bookmark-icon">💬</span>
+          <span class="bookmark-name">Discord</span>
+          <span class="bookmark-desc">Chat</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://www.tiktok.com/explore')">
+          <span class="bookmark-icon">🎵</span>
+          <span class="bookmark-name">TikTok</span>
+          <span class="bookmark-desc">Trending</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://poki.com')">
+          <span class="bookmark-icon">🎮</span>
+          <span class="bookmark-name">Poki</span>
+          <span class="bookmark-desc">Web Games</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://crazygames.com')">
+          <span class="bookmark-icon">🕹️</span>
+          <span class="bookmark-name">CrazyGames</span>
+          <span class="bookmark-desc">Online</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://chess.com')">
+          <span class="bookmark-icon">♟️</span>
+          <span class="bookmark-name">Chess</span>
+          <span class="bookmark-desc">Board Game</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://wikipedia.org')">
+          <span class="bookmark-icon">📚</span>
+          <span class="bookmark-name">Wikipedia</span>
+          <span class="bookmark-desc">Encyclopedia</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="openPresetProxy('https://github.com')">
+          <span class="bookmark-icon">🐙</span>
+          <span class="bookmark-name">GitHub</span>
+          <span class="bookmark-desc">Code</span>
+        </div>
+        <div class="proxy-bookmark-card" onclick="launchDaydream()">
+          <span class="bookmark-icon">✨</span>
+          <span class="bookmark-name">DayDream X</span>
+          <span class="bookmark-desc">ServiceWorker</span>
+        </div>
+      </div>
+
+      <!-- Proxy Viewport Container with floating header controls -->
+      <div id="proxy-viewport-container" class="proxy-viewport-wrapper">
+        <div class="proxy-viewport-header" id="proxy-viewport-header">
+          <div class="proxy-vp-title">
+            <span class="proxy-vp-indicator">●</span>
+            <span id="proxy-vp-active-url">Stealth Browser Active</span>
+          </div>
+          <div class="proxy-vp-controls">
+            <button class="proxy-vp-btn" onclick="proxyFrameReload()" title="Reload (R)">🔄 RELOAD</button>
+            <button class="proxy-vp-btn" onclick="toggleProxyFullscreen()" title="Toggle Fullscreen (F)">⛶ FULLSCREEN</button>
+            <button class="proxy-vp-btn" onclick="proxyFramePopout()" title="Pop out into new tab">↗ POPOUT</button>
+            <button class="proxy-vp-btn proxy-vp-close" onclick="closeProxyFrame()" title="Close viewport">✖ CLOSE</button>
+          </div>
+        </div>
+        <iframe id="proxy-frame" class="proxy-viewport-frame" allow="fullscreen; autoplay; encrypted-media"></iframe>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. CODE EDITOR TAB — RETRO IDE SANDBOX
+         ==================================================================== -->
+    <section id="editor-view" class="tab-view">
+      <div class="editor-toolbar">
+        <div class="editor-toolbar-left">
+          <label style="font-family:var(--font-retro-title);font-size:11.5px;color:var(--text-muted);">TEMPLATES:</label>
+          <select id="editor-template-select" class="editor-select" onchange="loadEditorTemplate(this.value)">
+            <option value="pong">🎮 Retro Pong Arcade Game</option>
+            <option value="matrix">💻 Matrix Digital Rain</option>
+            <option value="glitch">✨ Cyberpunk Glitch Typography</option>
+            <option value="synth">🔊 8-Bit Web Audio Synth</option>
+            <option value="blank">📄 Blank HTML5 Canvas</option>
+          </select>
+        </div>
+
+        <div class="editor-toolbar-right">
+          <button class="editor-btn editor-btn-run" onclick="runEditorCode()">▶ RUN CODE</button>
+          <button class="editor-btn" onclick="resetEditorCode()">🔄 RESET</button>
+          <button class="editor-btn" onclick="downloadEditorHtml()">💾 DOWNLOAD</button>
+          <button class="editor-btn" onclick="popoutEditorPreview()">↗ POPOUT</button>
+        </div>
+      </div>
+
+      <div class="editor-split-pane">
+        <!-- Left: Code Editor -->
+        <div class="editor-box-wrap">
+          <div class="editor-box-header">
+            <span>SOURCE CODE // HTML5 + CSS + JS</span>
+            <span id="editor-char-count">0 chars</span>
+          </div>
+          <textarea id="code-textarea" spellcheck="false"></textarea>
+          <!-- Terminal Console Output -->
+          <div class="editor-console-drawer">
+            <div class="console-header">
+              <span>TERMINAL OUTPUT (CONSOLE.LOG)</span>
+              <button style="background:none;border:none;color:#94a3b8;font-family:inherit;font-size:10px;cursor:pointer;" onclick="clearConsole()">CLEAR</button>
+            </div>
+            <div class="console-output" id="console-output">
+              <span style="color:#64748b;">// Console ready. Click 'RUN CODE' to execute.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Live Preview -->
+        <div class="editor-box-wrap">
+          <div class="editor-box-header">
+            <span>SANDBOX PREVIEW // LIVE RUNNER</span>
+            <span style="color:#10b981;">● RUNNING</span>
+          </div>
+          <iframe id="editor-preview-frame" sandbox="allow-scripts allow-modals allow-pointer-lock allow-same-origin"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. SETTINGS TAB — TAB CLOAKING & CONTROLS
+         ==================================================================== -->
+    <section id="settings-view" class="tab-view">
+      <div class="settings-card">
+        <h2 class="settings-section-title">TAB CLOAKING & STEALTH CONTROLS</h2>
+
+        <!-- Cloak Presets -->
+        <div class="settings-row">
+          <div class="settings-meta">
+            <span class="settings-label">🎭 Tab Cloak Preset</span>
+            <span class="settings-subtext">Disguises the browser tab's title and favicon to appear as an educational or productive app in your history and tabs.</span>
+          </div>
+          <select id="settings-cloak-select" class="settings-select" onchange="applyTabCloak(this.value)">
+            <option value="drive">🎭 Google Drive</option>
+            <option value="classroom">🎭 Google Classroom</option>
+            <option value="docs">🎭 Google Docs</option>
+            <option value="canvas">🎭 Canvas LMS</option>
+            <option value="desmos">🎭 Desmos Calculator</option>
+            <option value="default">🎭 Cloak Off (Games V7)</option>
+          </select>
+        </div>
+
+        <!-- Panic Hotkey -->
+        <div class="settings-row">
+          <div class="settings-meta">
+            <span class="settings-label">🚨 Emergency Panic Hotkey</span>
+            <span class="settings-subtext">Press this key anytime to instantly leave the site and redirect to a safe educational page. Default: <code>~</code> (Tilde).</span>
+          </div>
+          <input type="text" id="panic-url-input" class="settings-select" value="https://classroom.google.com" placeholder="Redirect URL..." />
+        </div>
+
+        <!-- About:Blank Stealth Launcher -->
+        <div class="settings-row">
+          <div class="settings-meta">
+            <span class="settings-label">🛡️ Launch in about:blank</span>
+            <span class="settings-subtext">Opens Games V7 inside a clean <code>about:blank</code> popup tab, completely hiding this URL from browser history and web inspection extensions.</span>
+          </div>
+          <button class="btn-settings-action" onclick="openAboutBlankCloak()">OPEN ABOUT:BLANK</button>
+        </div>
+
+        <!-- Visual Effects Toggles -->
+        <div class="settings-row">
+          <div class="settings-meta">
+            <span class="settings-label">📺 CRT Scanline Raster Filter</span>
+            <span class="settings-subtext">Toggle retro scanlines and cathode-ray tube raster effect across the interface.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-crt-scanlines" checked onchange="toggleCrtEffect(this.checked)" />
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Audio Beeps Toggle -->
+        <div class="settings-row">
+          <div class="settings-meta">
+            <span class="settings-label">🔊 Vintage Synth Audio FX</span>
+            <span class="settings-subtext">Synthesize classic 8-bit click and navigation sounds using the Web Audio API.</span>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="toggle-retro-audio" checked onchange="toggleAudioBeeps(this.checked)" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================================
+       IN-PAGE GAME PLAYER MODAL
+       ==================================================================== -->
+  <div id="game-player-modal" class="hidden">
+    <div class="player-header">
+      <div class="player-left">
+        <button class="btn-player-back" onclick="closeGamePlayer()">
+          <span>◀ EXIT</span>
+        </button>
+        <span class="player-title" id="player-modal-title">Retro Game</span>
+      </div>
+
+      <div class="player-right">
+        <button class="player-ctrl-btn" onclick="reloadCurrentGame()" title="Reload (R)">🔄 RELOAD</button>
+        <button class="player-ctrl-btn" onclick="togglePlayerFullscreen()" title="Fullscreen (F)">⛶ FULLSCREEN</button>
+        <button class="player-ctrl-btn" onclick="popoutCurrentGame()" title="Open in New Tab (B)">↗ POPOUT</button>
+        <button class="player-ctrl-btn" style="color:#ef4444;" onclick="triggerPanic()" title="Panic (~)">🚨 PANIC</button>
+      </div>
+    </div>
+    <iframe id="game-iframe" allow="fullscreen; autoplay; gamepad; clipboard-read; clipboard-write; encrypted-media"></iframe>
+  </div>
+
+  <!-- ====================================================================
+       WISP PROTOCOL & LATENCY MODAL
+       ==================================================================== -->
+  <div id="wisp-modal" class="wisp-modal-overlay hidden" onclick="if(event.target===this) closeWispPingModal()">
+    <div class="wisp-modal-dialog">
+      <div class="wisp-modal-header">
+        <div class="wisp-modal-title">
+          <span class="wisp-title-main">⚡ WISP PROXY &amp; LATENCY DIAGNOSTICS</span>
+          <span class="wisp-modal-sub">Real-time WebSocket round-trip ping &amp; edge router switcher</span>
+        </div>
+        <button type="button" class="wisp-modal-close" onclick="closeWispPingModal()" title="Close (Esc)">✖</button>
+      </div>
+
+      <div class="wisp-modal-body">
+        <div class="wisp-modal-toolbar">
+          <button type="button" class="btn-wisp-ping-all" onclick="pingAllWispServers()">
+            🔄 PING ALL SERVERS
+          </button>
+          <div class="wisp-active-info">
+            Active: <span id="wisp-active-server-name">Local / Tailscale Relay</span>
+          </div>
+        </div>
+
+        <div class="wisp-servers-list" id="wisp-servers-container">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <div class="wisp-custom-input-box">
+          <label class="wisp-custom-label">ADD CUSTOM WISP V1 ENDPOINT:</label>
+          <div class="wisp-input-row">
+            <input type="text" id="custom-wisp-url" class="wisp-custom-input" placeholder="wss://my-custom-wisp-server.org/wisp/" />
+            <button type="button" class="btn-wisp-add" onclick="addCustomWispServer()">+ ADD &amp; TEST</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js?v=7.3"></script>
 </body>
 </html>
